@@ -1,9 +1,8 @@
-require 'monkey_patches'
-
-require 'criterion'
-require 'repository'
-require 'stash'
-require 'identifier'
+require 'treasury/monkey_patches'
+require 'treasury/criterion'
+require 'treasury/repository'
+require 'treasury/stash'
+require 'treasury/identifier'
 
 module Treasury
   def self.[](klass)
