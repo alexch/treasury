@@ -18,6 +18,10 @@ module Treasury
       @stash.clear
     end
 
+    def <<(args)
+      put(args)
+    end
+
     def put(arg)
       raise "can't put nil" if arg.nil?
       unless arg.is_a?(Array)
@@ -73,7 +77,7 @@ module Treasury
       unless needed.empty?
         needed.sort!.uniq! # the sort is just to make debugging easier
 
-        c = caller[1]
+        c = caller.detect{|line| line !~ /treasury/} || caller[1]
         c.gsub!("#{File.expand_path(File.dirname(RAILS_ROOT))}/", '') if defined?(RAILS_ROOT)
         ActiveRecord::Base.logger.info("#{klass.name} Repository hitting DB from #{c}")
 
