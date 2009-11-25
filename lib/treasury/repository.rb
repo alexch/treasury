@@ -81,12 +81,16 @@ module Treasury
         c.gsub!("#{File.expand_path(File.dirname(RAILS_ROOT))}/", '') if defined?(RAILS_ROOT)
         ActiveRecord::Base.logger.info("#{klass.name} Repository hitting DB from #{c}")
 
-        found_in_store = klass.find(needed)
+        found_in_store = klass.find(:all, :conditions => ["id IN (?)", needed])
+        if found_in_store.size != needed.size
+          missing = (needed - found_in_store.map(&:id))
+          ActiveRecord::Base.logger.warn "Warning: couldn't find #{missing.size} out of #{needed.size} #{klass.name.pluralize}: missing #{missing.join(',')}"
+        end
         put(found_in_store)
       end
       ids.map{|id| @stash[id]} # find again so they come back in order
     end
-
+    
     def [](id)
       objects = find(id)
       if objects.empty?

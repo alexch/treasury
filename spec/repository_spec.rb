@@ -44,6 +44,10 @@ module Treasury
 
     end
 
+    def args_for_finding(array)
+      [:all, {:conditions => ["id IN (?)", array]}]
+    end
+
     it "is empty when created" do
       repository.size.should == 0
     end
@@ -116,7 +120,7 @@ module Treasury
       end
 
       it "returns nil if nothing found" do
-        User.should_receive(:find).with([99]).and_return([])
+        User.should_receive(:find).with(*args_for_finding([99])).and_return([])
         repository[99].should == nil
       end
 
@@ -150,7 +154,7 @@ module Treasury
 
       it "finds an object by id and puts it immediately" do
         frank.save!
-        User.should_receive(:find).with([frank.id]).and_return([frank])
+        User.should_receive(:find).with(*args_for_finding([frank.id])).and_return([frank])
         repository.find(frank.id).should == [frank]
         repository.size.should == 1
         repository[frank.id].should == frank
@@ -172,7 +176,7 @@ module Treasury
       it "doesn't ask ActiveRecord to find objects if they're already in the repository" do
         repository.put(frank)
         igor.save!
-        User.should_receive(:find).with([igor.id]).and_return([igor])
+        User.should_receive(:find).with(*args_for_finding([igor.id])).and_return([igor])
         repository.find([frank.id, igor.id]).should == [frank, igor]
       end
 
@@ -190,7 +194,7 @@ module Treasury
       it "only sends unique ids to ActiveRecord if there are duplicate ids" do
         frank.save!
         igor.save!
-        User.should_receive(:find).with([frank.id, igor.id]).and_return([frank, igor])
+        User.should_receive(:find).with(*args_for_finding([frank.id, igor.id])).and_return([frank, igor])
         repository.find([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
       end
     end
