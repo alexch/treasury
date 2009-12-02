@@ -39,6 +39,10 @@ module Treasury
     put( *treasure )
   end
   
+  def [](arg)
+    repository[arg]
+  end
+  
   def self.extended( klass )
     klass.class_eval do
       include InstanceMethods

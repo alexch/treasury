@@ -55,8 +55,14 @@ module Treasury
       it 'should #<<' do
         Animal << Animal.new 
         Animal.treasury_size.should == 1
-        Animal. << Animal.new, Animal.new
+        Animal << [Animal.new, Animal.new]
         Animal.treasury_size.should == 3
+      end
+      
+      it 'should find the first with id using []' do
+        my_animal = Animal.new
+        Animal << [Animal.new, my_animal]
+        Animal[my_animal.id].should == my_animal
       end
       
       it 'should have a #search method' do
