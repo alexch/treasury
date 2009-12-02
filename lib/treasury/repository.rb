@@ -22,11 +22,9 @@ module Treasury
       put(args)
     end
 
-    def put(arg)
+    def put(*arg)
       raise "can't put nil" if arg.nil?
-      unless arg.is_a?(Array)
-        arg = [arg]
-      end
+      arg.flatten!
       arg.each do |object|
         raise ArgumentError, "expected #{@klass} but got #{object.class}" unless object.is_a?(klass)
         if Identifier.new?(object)

@@ -14,4 +14,33 @@ module Treasury
       r.clear
     end
   end
+
+  def repository
+    Treasury[self]
+  end
+  
+  def treasury_size
+    repository.size
+  end
+  
+  def put(*args)
+    repository.put(*args)
+  end
+  
+  def search(*args)
+    repository.find(*args)
+  end
+  
+  def self.extended( klass )
+    klass.class_eval do
+      include InstanceMethods
+    end
+  end
+  
+  module InstanceMethods
+    def put
+      self.class.put(self)
+    end
+  end
+  
 end

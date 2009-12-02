@@ -31,4 +31,39 @@ module Treasury
       Treasury[Thing].size.should == 0
     end
   end
+  
+  describe "a mixed-in treasury object class" do
+    
+    class Animal
+      extend Treasury
+      def id
+        object_id
+      end
+    end
+    
+    describe 'class methods' do
+      it 'should have a #treasury_size and #put' do
+        Animal.treasury_size.should == 0
+        Animal.put(Animal.new, Animal.new)
+        Animal.treasury_size.should == 2
+      end
+      
+      it 'should have a #search method' do
+        find_me = Animal.new
+        Animal.put(find_me, Animal.new)
+        Animal.search(find_me.id).should == [find_me]
+      end
+    end
+    
+    describe 'instance methods' do
+      it 'should have a #put method' do
+        Treasury.clear_all
+        animal = Animal.new
+        animal.put
+        Animal.treasury_size.should == 1
+      end
+    end
+    
+     
+  end
 end

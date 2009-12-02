@@ -85,6 +85,13 @@ module Treasury
         repository[frank.id].should == frank
         repository[igor.id].should == igor
       end
+      
+      it "accepts an array of objects" do
+        repository.put(frank, igor)
+        repository.size.should == 2
+        repository[frank.id].should == frank
+        repository[igor.id].should == igor
+      end
 
       it "freaks if you try to put an object of the wrong type" do
         lambda do
