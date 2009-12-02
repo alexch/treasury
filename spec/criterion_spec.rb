@@ -341,5 +341,41 @@ module Treasury
         end
       end
     end
+    
+    describe Criterion::Or do
+      before do
+        @c = Criterion::Or.new(
+          (@c1 = Criterion::Contains.new(:subject => "name", :value => "o")),  # 'o' is only in 'bob'
+          (@c2 = Criterion::Contains.new(:subject => "name", :value => "r"))   # 'r' is only in 'charlie'
+        )
+      end
+
+      describe '#match' do
+
+        it "fails to match if no criteria match" do
+          @c.should_not be_match(@alice)
+        end
+
+        it "matches if only one criterion matches" do
+          @c.should be_match(@bob)
+          @c.should be_match(@charlie)
+        end
+      end
+
+      describe '#sql' do
+        it "ORs the sub-criteria's sql" do
+          @c.sql.should == ["(#{@c1.sql[0]}) OR (#{@c2.sql[0]})", "%o%", "%r%"]
+        end
+
+        it "doesn't say OR if there's only one contained criterion" do
+          c = Criterion::Equals.new(:subject => "pet", :value => "gerbil")
+          sql_parts = c.sql
+          sql_parts[0] = "(#{sql_parts[0]})"
+          Criterion::Or.new(c).sql.should == sql_parts
+        end
+      end
+      
+    end
+    
   end
 end

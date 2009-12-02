@@ -121,22 +121,19 @@ public
         ["LOWER(#{@property_name}) LIKE ?", "%#{value.downcase}%"]
       end
 
-    protected
+      protected
       def match_value?(criterion_value, object_value)
         /#{Regexp.escape(criterion_value)}/i =~ object_value
       end
     end
-
-    class And < Criterion
+    
+    class Conjunction < Criterion
       attr_reader :criteria
       def initialize(*criteria)
-        super(
-          :subject => nil, # todo: join sub-subjects?
-          :descriptor => "and"
-        )
+        super(:subject => nil)
         @criteria = criteria
       end
-      
+
       def sql
         statements = []
         values = []
@@ -144,14 +141,34 @@ public
           statements << "(#{criterion.sql[0]})"
           values << criterion.sql[1]
         end
-        [statements.join(" AND ")] + values
+        [statements.join(" #{conjunction_sql_operator} ")] + values
       end
 
+    end
+
+    class And < Conjunction
+      def conjunction_sql_operator
+        "AND"
+      end
+      
       def match?(object)
         @criteria.each do |criterion|
           return false unless criterion.match?(object)
         end
         return true
+      end
+    end
+
+    class Or < Conjunction
+      def conjunction_sql_operator
+        "OR"
+      end
+
+      def match?(object)
+        @criteria.each do |criterion|
+          return true if criterion.match?(object)
+        end
+        return false
       end
     end
 
