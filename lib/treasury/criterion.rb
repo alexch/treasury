@@ -38,6 +38,10 @@ module Treasury
       end
     end
 
+    def +(other)
+      And.new(self, other)
+    end
+
 protected
     def match_value?(criterion_value, object_value)
       false
@@ -124,6 +128,7 @@ public
     end
 
     class And < Criterion
+      attr_reader :criteria
       def initialize(*criteria)
         super(
           :subject => nil, # todo: join sub-subjects?

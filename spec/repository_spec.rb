@@ -42,6 +42,8 @@ module Treasury
 
       @repository = Repository.new(User)
 
+      Treasury.clear_all
+
     end
 
     def args_for_finding(array)
@@ -203,6 +205,14 @@ module Treasury
         igor.save!
         User.should_receive(:find).with(*args_for_finding([frank.id, igor.id])).and_return([frank, igor])
         repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
+      end
+
+      it "finds by criterion, and stashes the results for later" do
+        repository.size.should == 0
+        User.should_receive(:find).with(:all, {:conditions => ["name = ?", frank.name]}).and_return([frank])
+        repository.search(Criterion::Equals.new(:subject => "name", :value => frank.name)).should == [frank]
+        repository.size.should == 1
+        repository.instance_variable_get(:@stash).get(frank.id).should == frank
       end
     end
 

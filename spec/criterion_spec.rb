@@ -49,6 +49,14 @@ module Treasury
       c.description.should == "is named alex"
     end
     
+    it 'generates and Add criterion when used with #+' do
+      c1 = Criterion::Equals.new(:subject => "name", :value => "alex")
+      c2 = Criterion::Equals.new(:subject => "name", :value => "alex")
+      c3 = c1 + c2
+      c3.class.should == Criterion::And
+      c3.criteria.should == [c1, c2]
+    end
+
     describe '#match' do
       it "matches nothing (since it's a base class)" do
         c = Criterion.new(:subject => "name", :value => "alex")
@@ -323,6 +331,13 @@ module Treasury
       describe '#sql' do
         it "ANDs the sub-criteria's sql" do
           @c.sql.should == ["(#{@c1.sql[0]}) AND (#{@c2.sql[0]})", "%a%", "%r%"]
+        end
+
+        it "doesn't say AND if there's only one contained criterion" do
+          c = Criterion::Equals.new(:subject => "pet", :value => "gerbil")
+          sql_parts = c.sql
+          sql_parts[0] = "(#{sql_parts[0]})"
+          Criterion::And.new(c).sql.should == sql_parts
         end
       end
     end

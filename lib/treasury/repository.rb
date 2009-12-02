@@ -33,7 +33,16 @@ module Treasury
       end
       @stash.put(arg)
       arg.each do |object|
-        object.entered_repository if object.respond_to?(:entered_repository) # todo: test?
+        object.entered_repository if object.respond_to?(:entered_repository)
+      end
+    end
+
+    def [](id)
+      objects = search(id)
+      if objects.empty?
+        nil
+      else
+        objects.first
       end
     end
 
@@ -49,12 +58,14 @@ module Treasury
       when String
         find_ids([arg.to_i])
       when Criterion
-        # todo
+        find_by_criterion(arg)
       else
         raise "???"
       end
     end
     
+    protected
+
     def find_ids_in_criterion(criterion)
       find_ids(criterion.value)
     end
@@ -89,13 +100,11 @@ module Treasury
       ids.map{|id| @stash[id]} # find again so they come back in order
     end
     
-    def [](id)
-      objects = search(id)
-      if objects.empty?
-        nil
-      else
-        objects.first
-      end
+    def find_by_criterion(criterion)
+      # assumes ActiveRecord. Todo: use an adapter (aka store) for database independence
+      results = @klass.find(:all, :conditions => criterion.sql)
+      self << results
+      results
     end
 
   end
