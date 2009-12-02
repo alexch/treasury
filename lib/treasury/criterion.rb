@@ -144,8 +144,9 @@ public
         statements = []
         values = []
         @criteria.each do |criterion|
-          statements << "(#{criterion.sql[0]})"
-          values << criterion.sql[1]
+          conditions = criterion.sql
+          statements << "(#{conditions.shift})"
+          values += conditions
         end
         [statements.join(" #{conjunction_sql_operator} ")] + values
       end

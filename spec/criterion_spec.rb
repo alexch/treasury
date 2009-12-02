@@ -394,5 +394,16 @@ module Treasury
       
     end
     
+    describe Criterion::Conjunction do
+      it "nested criteria flatten out OK" do
+        action_ids = [1,2,3]
+        more_action_ids = [4,5,6]
+        c = (Treasury::Criterion::Equals.new(:subject => 'active', :value => true) +
+              (Treasury::Criterion::Id.new(:subject => 'upstream_action_id', :value => action_ids) | 
+               Treasury::Criterion::Id.new(:subject => 'downstream_action_id', :value => more_action_ids)))
+        c.sql.should == 
+         ["(active = ?) AND ((upstream_action_id IN (?)) OR (downstream_action_id IN (?)))", true, action_ids, more_action_ids]
+      end
+    end
   end
 end
