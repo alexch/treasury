@@ -214,6 +214,36 @@ module Treasury
         repository.size.should == 1
         repository.instance_variable_get(:@stash).get(frank.id).should == frank
       end
+      
+      it "accepts a block which uses the factory DSL" do
+        User.should_receive(:find).with(:all, {:conditions => ["name = ?", frank.name]}).and_return([frank])
+        repository.search do |q|
+          q.equals('name', frank.name)
+        end.should == [frank]        
+      end
+      
+      it 'fails if neither an argument nor a block is passed' do
+        lambda do
+          repository.search
+        end.should raise_error
+      end
+      
+      it 'fails if both an argument and a block are passed' do
+        lambda do
+          repository.search(99) do |factory|
+          end
+        end.should raise_error
+      end
+      
+    end
+    
+    describe '#criterion_from' do
+      it 'accepts a block and passes it a factory' do
+        criterion = repository.criterion_from do |criterion_factory|
+          criterion_factory.equals('active', true)
+        end
+        criterion.should == Criterion::Equals.new(:subject => 'active', :value => true)
+      end
     end
 
     class Dummy

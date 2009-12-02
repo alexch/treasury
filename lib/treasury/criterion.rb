@@ -10,6 +10,14 @@ module Treasury
       @value = nil if @value.blank?
       @property_name = options[:property_name] || @subject
     end
+    
+    def ==(other)
+      self.class == other.class &&
+      self.subject == other.subject &&
+      self.descriptor == other.descriptor &&
+      self.value == other.value &&
+      self.property_name == other.property_name
+    end
 
     def description
       "#{descriptor} #{described_value}"
@@ -55,7 +63,14 @@ protected
 
 public
 
+    class Factory
+    end
+
     class Equals < Criterion
+      def Factory.equals(subject, value)
+        Equals.new(:subject => subject, :value => value)
+      end
+
       def match_value?(criterion_value, object_value)
         if object_value.is_a? Fixnum
           object_value == criterion_value.to_i
@@ -74,6 +89,17 @@ public
     end
 
     class Id < Equals
+      def Factory.id(*args)
+        if args.length == 1
+          subject = :id
+          value = args.first
+        else
+          subject = args.shift
+          value = args.shift
+        end
+        Id.new(:subject => subject, :value => value)
+      end
+      
       def initialize(options)
         options[:value] = case options[:value]
         when Fixnum

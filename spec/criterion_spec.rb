@@ -15,6 +15,12 @@ module Treasury
       c.value.should == "alex"
       c.property_name.should == "nombre"
     end
+    
+    it 'should be equal if the instance variables are equivalent' do
+      c1 = Criterion.new(:subject => "name", :descriptor => "is named", :value => "alex", :property_name => "nombre")
+      c2 = Criterion.new(:subject => "name", :descriptor => "is named", :value => "alex", :property_name => "nombre")
+      c1.should == c2
+    end
 
     it "has some default values" do
       c = Criterion.new(:value => "123")
@@ -280,10 +286,10 @@ module Treasury
       end
 
       it "has a swell descriptor" do
-        @c.descriptor.should == "user_id refers to"  #todo: "user is" or "has user"
+        @c.descriptor.should == "user_id refers to" 
       end
 
-      it "grabs the name from its referent in its description"
+      # it "grabs the name from its referent in its description -- e.g. 'user is' or 'has user' instead of 'user_id refers to'"
 
       it "converts its value to an integer" do
         @c.value.should == 7

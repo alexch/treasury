@@ -46,8 +46,13 @@ module Treasury
       end
     end
 
-    def search(arg)
-      raise "Nil argument" if arg.nil?
+    def search(arg = nil, &block)
+      if (arg.nil? && !block_given?) || (block_given? && !arg.nil?)
+        raise "Must pass either an argument or a block to Repository#search"
+      end
+      
+      arg = criterion_from &block if block_given?
+      
       case arg
       when Array
         find_ids(arg)
@@ -62,6 +67,10 @@ module Treasury
       else
         raise "???"
       end
+    end
+    
+    def criterion_from
+      yield Criterion::Factory
     end
     
     protected
