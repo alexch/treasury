@@ -48,13 +48,30 @@ module Treasury
       c = Criterion.new(:subject => "name", :descriptor => "is named", :value => "alex")
       c.description.should == "is named alex"
     end
-    
-    it 'generates and Add criterion when used with #+' do
-      c1 = Criterion::Equals.new(:subject => "name", :value => "alex")
-      c2 = Criterion::Equals.new(:subject => "name", :value => "alex")
-      c3 = c1 + c2
-      c3.class.should == Criterion::And
-      c3.criteria.should == [c1, c2]
+
+    describe "operator overloading" do
+      before do
+        @c1 = Criterion::Equals.new(:subject => "name", :value => "alex")
+        @c2 = Criterion::Equals.new(:subject => "name", :value => "kane")
+      end
+      
+      it 'generates an And criterion when used with +' do
+        c3 = @c1 + @c2
+        c3.class.should == Criterion::And
+        c3.criteria.should == [@c1, @c2]
+      end
+
+      it 'generates an And criterion when used with &' do
+        c3 = @c1 & @c2
+        c3.class.should == Criterion::And
+        c3.criteria.should == [@c1, @c2]
+      end
+
+      it 'generates an Or criterion when used with |' do
+        c3 = @c1 | @c2
+        c3.class.should == Criterion::Or
+        c3.criteria.should == [@c1, @c2]
+      end
     end
 
     describe '#match' do

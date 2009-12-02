@@ -42,6 +42,12 @@ module Treasury
       And.new(self, other)
     end
 
+    alias_method :&, :+
+
+    def |(other)
+      Or.new(self, other)
+    end
+
 protected
     def match_value?(criterion_value, object_value)
       false
