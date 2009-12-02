@@ -37,7 +37,7 @@ module Treasury
       end
     end
 
-    def find(arg)
+    def search(arg)
       raise "Nil argument" if arg.nil?
       case arg
       when Array
@@ -90,7 +90,7 @@ module Treasury
     end
     
     def [](id)
-      objects = find(id)
+      objects = search(id)
       if objects.empty?
         nil
       else

@@ -279,7 +279,7 @@ module Treasury
       it "looks up its referent to get its described value" do
         mock_user = mock("User")
         mock_user.stub!(:name).and_return("YAY")
-        Treasury[User].should_receive(:find).with(7).and_return(mock_user)
+        Treasury[User].should_receive(:search).with(7).and_return(mock_user)
         @c.described_value.should == "YAY"
       end
 

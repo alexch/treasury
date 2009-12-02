@@ -107,7 +107,7 @@ public
         elsif value == 0
           "none"
         else
-          Treasury[@referent_class].find(@value).name
+          Treasury[@referent_class].search(@value).name
         end      
       end
     end

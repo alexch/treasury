@@ -133,15 +133,15 @@ module Treasury
 
       it "finds an object by string id" do
         repository.put(frank)
-        repository.find("#{frank.id}").should == [frank]
+        repository.search("#{frank.id}").should == [frank]
       end
 
     end
 
-    describe "#find" do
+    describe "#search" do
       it "returns an array of objects" do
         repository.put(frank)
-        x = repository.find(frank.id)
+        x = repository.search(frank.id)
         x.should_not be_nil
         x.should == [frank]
         repository[frank.id].should == frank
@@ -150,31 +150,31 @@ module Treasury
       it "returns several objects" do
         repository.put(frank)
         repository.put(igor)
-        repository.find([frank.id, igor.id]).should == [frank, igor]
+        repository.search([frank.id, igor.id]).should == [frank, igor]
       end
 
       it "returns them in the presented order" do
         repository.put(frank)
         repository.put(igor)
-        repository.find([igor.id, frank.id]).should == [igor, frank]
+        repository.search([igor.id, frank.id]).should == [igor, frank]
       end
 
       it "finds an object by id and puts it immediately" do
         frank.save!
         User.should_receive(:find).with(*args_for_finding([frank.id])).and_return([frank])
-        repository.find(frank.id).should == [frank]
+        repository.search(frank.id).should == [frank]
         repository.size.should == 1
         repository[frank.id].should == frank
       end
 
       it "finds an object by string id" do
         repository.put(frank)
-        repository.find("#{frank.id}").should == [frank]
+        repository.search("#{frank.id}").should == [frank]
       end
 
       it "finds a bunch of objects and puts them immediately" do
         repository.put([frank, igor])
-        repository.find([frank.id, igor.id]).should == [frank, igor]
+        repository.search([frank.id, igor.id]).should == [frank, igor]
         repository.size.should == 2
         repository[frank.id].should == frank
         repository[igor.id].should == igor
@@ -184,25 +184,25 @@ module Treasury
         repository.put(frank)
         igor.save!
         User.should_receive(:find).with(*args_for_finding([igor.id])).and_return([igor])
-        repository.find([frank.id, igor.id]).should == [frank, igor]
+        repository.search([frank.id, igor.id]).should == [frank, igor]
       end
 
       it "returns them in the presented order" do
         repository.put([frank, igor])
-        repository.find([frank.id, igor.id]).should == [frank, igor]
-        repository.find([igor.id, frank.id]).should == [igor, frank]
+        repository.search([frank.id, igor.id]).should == [frank, igor]
+        repository.search([igor.id, frank.id]).should == [igor, frank]
       end
 
       it "works ok even if there are duplicate ids" do
         repository.put([frank, igor])
-        repository.find([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
+        repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
       end
 
       it "only sends unique ids to ActiveRecord if there are duplicate ids" do
         frank.save!
         igor.save!
         User.should_receive(:find).with(*args_for_finding([frank.id, igor.id])).and_return([frank, igor])
-        repository.find([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
+        repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
       end
     end
 

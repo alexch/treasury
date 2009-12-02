@@ -28,7 +28,7 @@ module Treasury
   end
   
   def search(*args)
-    repository.find(*args)
+    repository.search(*args)
   end
   
   def self.extended( klass )
