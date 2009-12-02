@@ -31,6 +31,14 @@ module Treasury
     repository.search(*args)
   end
   
+  def clear_treasury
+    repository.clear
+  end
+  
+  def <<( *treasure )
+    put( *treasure )
+  end
+  
   def self.extended( klass )
     klass.class_eval do
       include InstanceMethods

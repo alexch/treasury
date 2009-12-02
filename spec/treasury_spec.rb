@@ -42,16 +42,34 @@ module Treasury
     end
     
     describe 'class methods' do
+      before do
+        Treasury.clear_all
+      end
+      
       it 'should have a #treasury_size and #put' do
         Animal.treasury_size.should == 0
         Animal.put(Animal.new, Animal.new)
         Animal.treasury_size.should == 2
       end
       
+      it 'should #<<' do
+        Animal << Animal.new 
+        Animal.treasury_size.should == 1
+        Animal. << Animal.new, Animal.new
+        Animal.treasury_size.should == 3
+      end
+      
       it 'should have a #search method' do
         find_me = Animal.new
         Animal.put(find_me, Animal.new)
         Animal.search(find_me.id).should == [find_me]
+      end
+      
+      it 'should #clear_treasury' do
+        Animal.put(Animal.new, Animal.new)
+        Animal.treasury_size.should == 2 # just to check
+        Animal.clear_treasury
+        Animal.treasury_size.should == 0
       end
     end
     

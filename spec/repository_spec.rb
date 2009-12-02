@@ -9,7 +9,7 @@ Repository needs to
 * the stash should expire old items based on some algorithm
 * take a query and retrieve them from the stash only
 * take a query and retrieve them from the store only (but stash them on the way back)
-* chain queries, e.g. "get all putresses for all users whose zip is 90210"
+* chain queries, e.g. "get all addresses for all users whose zip is 90210"
 * store a list of items, replacing what's in the stash too
 * deal with relationships
 
