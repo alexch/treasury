@@ -71,6 +71,14 @@ module Treasury
         Animal.search(find_me.id).should == [find_me]
       end
       
+      it '#search accepts a block which uses the factory DSL' do
+        otter = Animal.new
+        Animal.should_receive(:find).with(:all, {:conditions => ["name = ?", "otter"]}).and_return([otter])
+        Animal.search do |q|
+          q.equals('name', "otter")
+        end.should == [otter]
+      end
+      
       it 'should #clear_treasury' do
         Animal.put(Animal.new, Animal.new)
         Animal.treasury_size.should == 2 # just to check

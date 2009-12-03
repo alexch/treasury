@@ -27,8 +27,8 @@ module Treasury
     repository.put(*args)
   end
   
-  def search(*args)
-    repository.search(*args)
+  def search(*args, &block)
+    repository.search(*args, &block)
   end
   
   def clear_treasury
