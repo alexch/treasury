@@ -37,15 +37,19 @@ module Treasury
       @igor = User.new(:name => "igor")
 
       @castle = Address.new()
-
-      ActiveRecord::Base.logger = Logger.new(STDOUT) unless ActiveRecord::Base.logger
+      @old_logger = ActiveRecord::Base.logger
+      @output = StringIO.new
+      ActiveRecord::Base.logger = Logger.new(@output)
 
       @repository = Repository.new(User)
 
       Treasury.clear_all
-
     end
 
+    after do
+      ActiveRecord::Base.logger = @old_logger
+    end
+    
     def args_for_finding(array)
       [:all, {:conditions => ["id IN (?)", array]}]
     end
@@ -128,9 +132,11 @@ module Treasury
         repository[frank.id].should == frank
       end
 
-      it "returns nil if nothing found" do
+      it "returns nil and warns if nothing found" do
         User.should_receive(:find).with(*args_for_finding([99])).and_return([])
         repository[99].should == nil
+        @output.string.should =~ /Treasury::User Repository hitting DB from/
+        @output.string.should =~ /Warning: couldn't find 1 out of 1 Treasury::Users: missing ids 99/
       end
 
       it "finds an object by string id" do
@@ -167,6 +173,7 @@ module Treasury
         repository.search(frank.id).should == [frank]
         repository.size.should == 1
         repository[frank.id].should == frank
+        @output.string.should =~ /Treasury::User Repository hitting DB from/
       end
 
       it "finds an object by string id" do
@@ -187,6 +194,7 @@ module Treasury
         igor.save!
         User.should_receive(:find).with(*args_for_finding([igor.id])).and_return([igor])
         repository.search([frank.id, igor.id]).should == [frank, igor]
+        @output.string.should =~ /Treasury::User Repository hitting DB from/
       end
 
       it "returns them in the presented order" do
@@ -205,6 +213,7 @@ module Treasury
         igor.save!
         User.should_receive(:find).with(*args_for_finding([frank.id, igor.id])).and_return([frank, igor])
         repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
+        @output.string.should =~ /Treasury::User Repository hitting DB from/
       end
 
       it "finds by criterion, and stashes the results for later" do

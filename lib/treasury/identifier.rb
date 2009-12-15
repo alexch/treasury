@@ -1,8 +1,8 @@
 begin
-  require 'activerecord' # todo: make optional
+  require 'active_record' # todo: make optional
 rescue LoadError
   require 'rubygems'
-  require 'activerecord'
+  require 'active_record'
 end
 
 module Treasury

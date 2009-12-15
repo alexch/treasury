@@ -4,10 +4,12 @@ module Treasury
   class Repository
 
     attr_reader :klass
+    attr_accessor :store
 
     def initialize(klass)
       @klass = klass
       @stash = Stash.new
+      @store = Store::ActiveRecord.new(klass) # todo: allow other stores
     end
 
     def size
@@ -94,16 +96,15 @@ module Treasury
 
       unless needed.empty?
         needed.sort!.uniq! # the sort is just to make debugging easier
+        ActiveRecord::Base.logger.info("#{klass.name} Repository hitting DB from #{calling_function}")
 
-        c = caller.detect{|line| line !~ /treasury/} || caller[1]
-        c.gsub!("#{File.expand_path(File.dirname(RAILS_ROOT))}/", '') if defined?(RAILS_ROOT)
-        ActiveRecord::Base.logger.info("#{klass.name} Repository hitting DB from #{c}")
+        found_in_store = store.find(needed)
 
-        found_in_store = klass.find(:all, :conditions => ["id IN (?)", needed])
         if found_in_store.size != needed.size
           missing = (needed - found_in_store.map(&:id))
-          ActiveRecord::Base.logger.warn "Warning: couldn't find #{missing.size} out of #{needed.size} #{klass.name.pluralize}: missing #{missing.join(',')}"
+          ActiveRecord::Base.logger.warn "Warning: couldn't find #{missing.size} out of #{needed.size} #{klass.name.pluralize}: missing ids #{missing.join(',')}"
         end
+
         put(found_in_store)
       end
       ids.map{|id| @stash[id]} # find again so they come back in order
@@ -114,6 +115,12 @@ module Treasury
       results = @klass.find(:all, :conditions => criterion.sql)
       self << results
       results
+    end
+
+    def calling_function
+      c = caller.detect{|line| line !~ /treasury/} || caller[2]
+      c.gsub!("#{File.expand_path(File.dirname(RAILS_ROOT))}/", '') if defined?(RAILS_ROOT)
+      c
     end
 
   end

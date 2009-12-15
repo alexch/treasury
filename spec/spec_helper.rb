@@ -7,6 +7,16 @@ require 'spec/autorun'
 require 'spec/domain'
 require 'spec/matchers'
 
+
+def capturing_output
+  output = StringIO.new
+  $stdout = output
+  yield
+  output.string
+ensure
+  $stdout = STDOUT
+end
+
 module Matchers
   # borrowed from http://github.com/aiwilliams/spec_goodies
 

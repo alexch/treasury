@@ -1,6 +1,6 @@
 require File.expand_path("#{File.dirname(__FILE__)}/spec_helper")
 
-require 'activerecord'
+require 'active_record'
 
 ActiveRecord::Base.establish_connection(
   :adapter => "sqlite3",

@@ -1,6 +1,7 @@
 require 'treasury/monkey_patches'
 require 'treasury/criterion'
 require 'treasury/repository'
+require 'treasury/store'
 require 'treasury/stash'
 require 'treasury/identifier'
 

@@ -64,6 +64,7 @@ protected
 public
 
     class Factory
+      # methods are defined inside the relevant Criterion subclasses
     end
 
     class Equals < Criterion
