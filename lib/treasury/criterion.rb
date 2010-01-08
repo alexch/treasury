@@ -150,6 +150,10 @@ public
     end
 
     class Contains < Criterion
+      def Factory.contains(subject, value)
+        Contains.new(:subject => subject, :value => value)
+      end
+
       def sql
         ["LOWER(#{@property_name}) LIKE ?", "%#{value.downcase}%"]
       end

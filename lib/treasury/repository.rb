@@ -68,6 +68,10 @@ module Treasury
       end
     end
     
+    def extract(arg = nil, &block)
+      search(arg, &block).map{|o| @store.class.key_for(o)}
+    end
+
     def criterion_from
       yield Criterion::Factory
     end

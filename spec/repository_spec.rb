@@ -35,6 +35,7 @@ module Treasury
     before do
       @frank = User.new(:name => "frankenstein")
       @igor = User.new(:name => "igor")
+      @elsa = User.new(:name => "elsa")
 
       @castle = Address.new()
       @old_logger = ActiveRecord::Base.logger
@@ -44,7 +45,6 @@ module Treasury
       @repository = Repository.new(User)
 
       Treasury.clear_all
-      Treasury[User] = @repository
     end
 
     after do
@@ -241,11 +241,23 @@ module Treasury
           end
         end.should raise_error
       end
-      
     end
     
     describe '#extract' do
-      it 'performs a search and pulls out the ids'
+      before do
+        @repository.put([@frank, @igor, @elsa])
+      end
+
+      it 'performs a search and pulls out the ids' do
+        criterion = Criterion::Contains.new(:subject => "name", :value => "a")
+        @repository.extract(criterion).should include_only(@frank.id, @elsa.id)
+      end
+
+      it 'performs a search with a block and pulls out the ids' do
+        @repository.extract do |user|
+          user.contains(:name,  "a")
+        end.should include_only(@frank.id, @elsa.id)
+      end
     end
     
     describe '#criterion_from' do
