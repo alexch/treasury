@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "treasury"
     gem.summary = %Q{Repository Pattern for Ruby}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.description = %Q{Treasury sits on top of an ORM (ActiveRecord, DataMapper, Aqua, etc.) and provides an in-memory instance cache for your objects. It also provides a criteria DSL for making queries.}
     gem.email = "alex@stinky.com"
     gem.homepage = "http://github.com/alexch/treasury"
     gem.authors = ["Alex Chaffee"]

@@ -1,11 +1,16 @@
 require 'treasury/monkey_patches'
 require 'treasury/criterion'
 require 'treasury/repository'
+require 'treasury/identifier'
 require 'treasury/store'
 require 'treasury/stash'
-require 'treasury/identifier'
+require 'treasury/stash_store'
+require 'treasury/active_record_store'
 
 module Treasury
+  
+  # methods on Treasury itself
+  
   def self.[](klass)
     ((Thread.current[:repositories] ||= {})[klass] ||= Repository.new(klass))
   end
@@ -15,6 +20,12 @@ module Treasury
       r.clear
     end
   end
+
+  def self.[]=(klass, repository)
+    (Thread.current[:repositories] ||= {})[klass] = repository
+  end
+  
+  # methods on Treasury-enabled model classes that extend Treasury
 
   def repository
     Treasury[self]
@@ -43,7 +54,7 @@ module Treasury
   def [](arg)
     repository[arg]
   end
-  
+
   def self.extended( klass )
     klass.class_eval do
       include InstanceMethods

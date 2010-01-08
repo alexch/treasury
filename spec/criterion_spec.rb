@@ -1,4 +1,5 @@
-require File.expand_path("#{File.dirname(__FILE__)}/spec_helper")
+here = File.expand_path(File.dirname(__FILE__))
+require  "#{here}/spec_helper"
 
 module Treasury
   describe Criterion do
@@ -364,7 +365,7 @@ module Treasury
         end
       end
     end
-    
+
     describe Criterion::Or do
       before do
         @c = Criterion::Or.new(
@@ -374,7 +375,6 @@ module Treasury
       end
 
       describe '#match' do
-
         it "fails to match if no criteria match" do
           @c.should_not be_match(@alice)
         end
@@ -397,9 +397,8 @@ module Treasury
           Criterion::Or.new(c).sql.should == sql_parts
         end
       end
-      
     end
-    
+
     describe Criterion::Conjunction do
       it "nested criteria flatten out OK" do
         action_ids = [1,2,3]
@@ -409,6 +408,17 @@ module Treasury
                Treasury::Criterion::Id.new(:subject => 'downstream_action_id', :value => more_action_ids)))
         c.sql.should == 
          ["(active = ?) AND ((upstream_action_id IN (?)) OR (downstream_action_id IN (?)))", true, action_ids, more_action_ids]
+      end
+    end
+    
+    describe Criterion::Extract do
+      it "performs a search and extracts the ids from its results" do
+        Treasury[User] << [@alice, @bob, @charlie]
+        nested_criterion = Criterion::Contains.new(:subject => "name", :value => "a")
+        User.should_receive(:find).with(:all, {:conditions => ["LOWER(name) LIKE ?", '%a%']}).and_return([@alice, @charlie])
+        Treasury[User].search(nested_criterion).should include_only(@alice, @charlie)
+        c = Criterion::Extract.new(:criterion => nested_criterion)
+        pending
       end
     end
   end

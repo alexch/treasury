@@ -15,6 +15,18 @@ module Treasury
     class Unimplemented < RuntimeError
     end
     
+    def self.for_class(klass)
+      Identifier.store_for(klass).new(klass)
+    end
+    
+    def self.key_for(object)
+      object.treasury_key
+    end
+
+    def self.new?(object)
+      object.treasury_key.nil?
+    end
+
     def initialize(klass = nil)
       @klass = klass
     end
@@ -26,19 +38,19 @@ module Treasury
     def clear
       raise Unimplemented
     end
-
+    
     # Put an object, or an array of objects, into the store.
-    def put(object)
-      unless object.is_a? Array
-        object = [object]
+    def put(objects)
+      unless objects.is_a? Array
+        objects = [objects]
       end
       new_objects = []
       old_objects = []
-      object.each do |o|
+      objects.each do |object|
         if Identifier.new?(object)
-          new_objects << o
+          new_objects << object
         else
-          old_objects << o
+          old_objects << object
         end
       end
       put_new(new_objects) unless new_objects.empty?
@@ -86,10 +98,5 @@ module Treasury
       raise Unimplemented
     end
     
-    class ActiveRecord < Store
-      def find_by_ids(ids)
-        @klass.find(:all, :conditions => ["id IN (?)", ids])
-      end
-    end
   end
 end

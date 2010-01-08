@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 module Treasury
   describe "Treasury" do
-    class Thing
+    class Thing < Treasure
       def id
         object_id
       end
@@ -13,8 +13,9 @@ module Treasury
       r1.should be_a(Repository)
       Treasury[Thing].should == r1
     end
-
-    it "stores itself in a Thread Local" do
+    
+    # but should it?
+    it "stores itself in a Thread Local" do 
       @r1 = nil
       @r2 = nil
       Thread.new {@r1 = Treasury[Thing]}
@@ -30,15 +31,29 @@ module Treasury
       Treasury.clear_all
       Treasury[Thing].size.should == 0
     end
+    
+    it "can replace the repository for a given class" do
+      new_repository = Repository.new(Thing)
+      Treasury[Thing] = new_repository
+      Treasury[Thing].should == new_repository
+    end
   end
   
   describe "a mixed-in treasury object class" do
     
     class Animal
       extend Treasury
-      def id
+      
+      attr_accessor :name
+      
+      def initialize(name = "animal")
+        @name = name
+      end
+      
+      def treasury_key
         object_id
       end
+
     end
     
     describe 'class methods' do
@@ -62,18 +77,18 @@ module Treasury
       it 'should find the first with id using []' do
         my_animal = Animal.new
         Animal << [Animal.new, my_animal]
-        Animal[my_animal.id].should == my_animal
+        Animal[my_animal.treasury_key].should == my_animal
       end
       
       it 'should have a #search method' do
         find_me = Animal.new
         Animal.put(find_me, Animal.new)
-        Animal.search(find_me.id).should == [find_me]
+        Animal.search(find_me.treasury_key).should == [find_me]
       end
       
       it '#search accepts a block which uses the factory DSL' do
-        otter = Animal.new
-        Animal.should_receive(:find).with(:all, {:conditions => ["name = ?", "otter"]}).and_return([otter])
+        otter = Animal.new("otter")
+        Treasury[Animal].store.put(otter)
         Animal.search do |q|
           q.equals('name', "otter")
         end.should == [otter]

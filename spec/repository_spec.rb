@@ -27,7 +27,7 @@ other features:
 
 =end
 
-module Treasury 
+module Treasury
   describe Repository do
     attr_reader :frank, :igor, :brain, :lunch
     attr_reader :repository
@@ -44,6 +44,7 @@ module Treasury
       @repository = Repository.new(User)
 
       Treasury.clear_all
+      Treasury[User] = @repository
     end
 
     after do
@@ -104,7 +105,7 @@ module Treasury
           repository.put(@castle)
         end.should raise_error(ArgumentError)
       end
-
+      
       class Animal
         def id; 1; end
       end
@@ -133,7 +134,7 @@ module Treasury
       end
 
       it "returns nil and warns if nothing found" do
-        User.should_receive(:find).with(*args_for_finding([99])).and_return([])
+        # User.should_receive(:find).with(*args_for_finding([99])).and_return([])
         repository[99].should == nil
         @output.string.should =~ /Treasury::User Repository hitting DB from/
         @output.string.should =~ /Warning: couldn't find 1 out of 1 Treasury::Users: missing ids 99/
@@ -143,7 +144,6 @@ module Treasury
         repository.put(frank)
         repository.search("#{frank.id}").should == [frank]
       end
-
     end
 
     describe "#search" do
@@ -168,12 +168,10 @@ module Treasury
       end
 
       it "finds an object by id and puts it immediately" do
-        frank.save!
-        User.should_receive(:find).with(*args_for_finding([frank.id])).and_return([frank])
+        repository.store.put(frank)
         repository.search(frank.id).should == [frank]
         repository.size.should == 1
         repository[frank.id].should == frank
-        @output.string.should =~ /Treasury::User Repository hitting DB from/
       end
 
       it "finds an object by string id" do
@@ -191,8 +189,7 @@ module Treasury
 
       it "doesn't ask ActiveRecord to find objects if they're already in the repository" do
         repository.put(frank)
-        igor.save!
-        User.should_receive(:find).with(*args_for_finding([igor.id])).and_return([igor])
+        repository.store.put(igor)
         repository.search([frank.id, igor.id]).should == [frank, igor]
         @output.string.should =~ /Treasury::User Repository hitting DB from/
       end
@@ -208,24 +205,25 @@ module Treasury
         repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
       end
 
-      it "only sends unique ids to ActiveRecord if there are duplicate ids" do
+      it "only requests unique ids from store if there are duplicate ids" do
         frank.save!
         igor.save!
-        User.should_receive(:find).with(*args_for_finding([frank.id, igor.id])).and_return([frank, igor])
+        repository.store.should_receive(:find_by_ids).with([frank.id, igor.id]).and_return([frank, igor])
         repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
         @output.string.should =~ /Treasury::User Repository hitting DB from/
       end
 
       it "finds by criterion, and stashes the results for later" do
+        repository.store.put(frank)
         repository.size.should == 0
-        User.should_receive(:find).with(:all, {:conditions => ["name = ?", frank.name]}).and_return([frank])
-        repository.search(Criterion::Equals.new(:subject => "name", :value => frank.name)).should == [frank]
+        criterion = Criterion::Equals.new(:subject => "name", :value => frank.name)
+        repository.search(criterion).should == [frank]
         repository.size.should == 1
         repository.instance_variable_get(:@stash).get(frank.id).should == frank
       end
       
       it "accepts a block which uses the factory DSL" do
-        User.should_receive(:find).with(:all, {:conditions => ["name = ?", frank.name]}).and_return([frank])
+        repository.store.put(frank)
         repository.search do |q|
           q.equals('name', frank.name)
         end.should == [frank]        
@@ -246,6 +244,10 @@ module Treasury
       
     end
     
+    describe '#extract' do
+      it 'performs a search and pulls out the ids'
+    end
+    
     describe '#criterion_from' do
       it 'accepts a block and passes it a factory' do
         criterion = repository.criterion_from do |criterion_factory|
@@ -255,7 +257,7 @@ module Treasury
       end
     end
 
-    class Dummy
+    class Dummy < Treasure
       attr_reader :entered
       def id
         1

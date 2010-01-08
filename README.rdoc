@@ -5,7 +5,7 @@ notably http://martinfowler.com/eaaCatalog/repository.html and
 http://www.infoq.com/resource/minibooks/domain-driven-design-quickly/en/pdf/DomainDrivenDesignQuicklyOnline.pdf
 (p.51)
 
-From Fowler/Hieatt/Mee): "A system with a complex domain model often benefits from a
+From Fowler/Hieatt/Mee: "A system with a complex domain model often benefits from a
 layer, such as the one provided by Data Mapper, that isolates domain objects from
 details of the database access code. In such systems it can be worthwhile to build
 another layer of abstraction over the mapping layer where query construction code is

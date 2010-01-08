@@ -1,28 +1,27 @@
-require File.expand_path("#{File.dirname(__FILE__)}/spec_helper")
-
-require 'active_record'
-
-ActiveRecord::Base.establish_connection(
-  :adapter => "sqlite3",
-  :database  => ":memory:"
-)
-
-class ActiveUser < ActiveRecord::Base
-  
-end
-
-class CreateActiveUser < ActiveRecord::Migration
-  def self.up
-    create_table :active_users do |t|
-      t.string :name
-    end
-  end
-end
-
-CreateActiveUser.up
+here = File.expand_path(File.dirname(__FILE__))
+require  "#{here}/spec_helper"
+require  "#{here}/active_record_spec_helper"
 
 module Treasury
   describe Identifier do
+    it 'can look up the store for an object by its class' do
+      Identifier.store_for(ActiveUser.new).should == ActiveRecordStore
+      Identifier.store_for(User.new).should == TreasureStore
+    end
+    
+    describe 'register' do
+      class Unobtainium
+      end
+      class UnobtainiumStore < Store
+      end
+      it 'inserts a store into the registry' do
+        object = Unobtainium.new
+        lambda { Identifier.store_for(object) }.should raise_error
+        Identifier.register(Unobtainium, UnobtainiumStore)
+        Identifier.store_for(object).should == UnobtainiumStore
+      end
+    end
+    
     describe 'new?' do
       it "works on a new ActiveRecord object" do
         Identifier.new?(ActiveUser.new).should be_true

@@ -3,7 +3,12 @@ require 'ostruct'
 module Treasury
 
   class Treasure
-    attr_accessor :id
+    attr_accessor :id, :entered_repository
+
+    def treasury_key
+      id
+    end
+
     def initialize(hash = {})
       {:id => nil}.merge(hash).each_pair do |k,v|
         self.class.class_eval do
@@ -12,11 +17,14 @@ module Treasury
         instance_variable_set("@#{k}", v)
       end
     end
-    
+
     def save!
-      @@next_id ||= 0
-      @id = (@@next_id += 1)
+      unless id
+        @@next_id ||= 0
+        @id = (@@next_id += 1)
+      end
     end
+    
   end
   
   class User < Treasure
@@ -30,4 +38,15 @@ module Treasury
 
   class Country < Treasure
   end
+
+  class TreasureStore < StashStore
+    def put_new(objects)
+      objects.each do |object|
+        object.save!
+      end
+      put_old(objects)
+    end
+  end
+  
+  Identifier.register(Treasure, TreasureStore)
 end

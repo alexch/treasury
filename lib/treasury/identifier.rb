@@ -7,27 +7,36 @@ end
 
 module Treasury
   class Identifier
-    def self.new?(object)
-      case object
-      when ActiveRecord::Base
-        object.new_record?
-      else
-        object.id.nil?
+
+    def self.register(object_class, store_class)
+      (@stores ||= {})[object_class] = store_class
+    end
+    
+    def self.store_for(object)
+      (@stores ||= {}).each_pair do |object_class, store_class|
+        if (object.is_a?(Class) && object.ancestors.include?(object_class)) ||
+           (object.is_a?(object_class))
+          return store_class
+        end
       end
+      
+      if (object.is_a?(Class) && object.is_a?(Treasury)) ||
+         (object.class.is_a?(Treasury))
+        return StashStore
+      end
+      raise "Couldn't find store class for #{object.inspect}"
+    end
+    
+    def self.new?(object)
+      store_for(object).new?(object)
     end
     
     def self.id(object)
-      case object
-      when ActiveRecord::Base
-        if object.new_record?
-          nil
-        else
-          object.id
-        end
+      if new?(object)
+        nil
       else
-        object.id
+        store_for(object).key_for(object)
       end
     end
   end
 end
-

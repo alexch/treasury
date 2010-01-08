@@ -206,5 +206,7 @@ public
       end
     end
 
+    class Extract < Criterion
+    end
   end
 end

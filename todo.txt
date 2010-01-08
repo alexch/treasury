@@ -1,0 +1,4 @@
+TODO
+-----
+change "id" to "key" and allow other field names to be keys
+merge Identifier into Store

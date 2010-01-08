@@ -9,7 +9,7 @@ module Treasury
     def initialize(klass)
       @klass = klass
       @stash = Stash.new
-      @store = Store::ActiveRecord.new(klass) # todo: allow other stores
+      @store = Identifier.store_for(klass).new
     end
 
     def size
@@ -25,14 +25,11 @@ module Treasury
     end
 
     def put(*arg)
-      raise "can't put nil" if arg.nil?
       arg.flatten!
       arg.each do |object|
         raise ArgumentError, "expected #{@klass} but got #{object.class}" unless object.is_a?(klass)
-        if Identifier.new?(object)
-          object.save!  # todo: store.save(object)
-        end
       end
+      store.put(arg)
       @stash.put(arg)
       arg.each do |object|
         object.entered_repository if object.respond_to?(:entered_repository)
@@ -98,7 +95,7 @@ module Treasury
         needed.sort!.uniq! # the sort is just to make debugging easier
         ActiveRecord::Base.logger.info("#{klass.name} Repository hitting DB from #{calling_function}")
 
-        found_in_store = store.find(needed)
+        found_in_store = store.find(needed).compact
 
         if found_in_store.size != needed.size
           missing = (needed - found_in_store.map(&:id))
@@ -111,8 +108,7 @@ module Treasury
     end
     
     def find_by_criterion(criterion)
-      # assumes ActiveRecord. Todo: use an adapter (aka store) for database independence
-      results = @klass.find(:all, :conditions => criterion.sql)
+      results = store.find(criterion)
       self << results
       results
     end
