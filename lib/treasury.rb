@@ -11,18 +11,26 @@ module Treasury
   
   # methods on Treasury itself
   
+  def self.repositories
+    (@@repositories ||= {})
+  end
+  
+  def self.repository(klass)
+    self.repositories[klass] ||= Repository.new(klass)
+  end
+  
   def self.[](klass)
-    ((Thread.current[:repositories] ||= {})[klass] ||= Repository.new(klass))
+    self.repository(klass)
   end
 
   def self.clear_all
-    (Thread.current[:repositories] ||= {}).values.each do |r|
+    self.repositories.values.each do |r|
       r.clear
     end
   end
 
   def self.[]=(klass, repository)
-    (Thread.current[:repositories] ||= {})[klass] = repository
+    self.repositories[klass] = repository
   end
   
   # methods on Treasury-enabled model classes that extend Treasury

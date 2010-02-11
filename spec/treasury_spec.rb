@@ -13,17 +13,6 @@ module Treasury
       r1.should be_a(Repository)
       Treasury[Thing].should == r1
     end
-    
-    # but should it?
-    it "stores itself in a Thread Local" do 
-      @r1 = nil
-      @r2 = nil
-      Thread.new {@r1 = Treasury[Thing]}
-      Thread.new {@r2 = Treasury[Thing]}
-      @r1.should_not be_nil
-      @r2.should_not be_nil
-      @r2.should_not == @r1
-    end
 
     it "can clear all" do
       Treasury[Thing].put([Thing.new, Thing.new])
