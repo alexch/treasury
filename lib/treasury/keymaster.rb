@@ -6,7 +6,7 @@ rescue LoadError
 end
 
 module Treasury
-  class Identifier
+  class Keymaster
 
     def self.register(object_class, store_class)
       (@stores ||= {})[object_class] = store_class

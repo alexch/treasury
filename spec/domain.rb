@@ -48,5 +48,5 @@ module Treasury
     end
   end
   
-  Identifier.register(Treasure, TreasureStore)
+  Keymaster.register(Treasure, TreasureStore)
 end

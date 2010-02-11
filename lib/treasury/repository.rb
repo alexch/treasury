@@ -9,7 +9,7 @@ module Treasury
     def initialize(klass)
       @klass = klass
       @stash = Stash.new
-      @store = Identifier.store_for(klass).new
+      @store = Keymaster.store_for(klass).new
     end
 
     def size

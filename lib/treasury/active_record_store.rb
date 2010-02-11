@@ -37,5 +37,5 @@ module Treasury
 
   end
   
-  Identifier.register(ActiveRecord::Base, ActiveRecordStore)
+  Keymaster.register(ActiveRecord::Base, ActiveRecordStore)
 end

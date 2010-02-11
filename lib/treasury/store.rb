@@ -16,7 +16,7 @@ module Treasury
     end
     
     def self.for_class(klass)
-      Identifier.store_for(klass).new(klass)
+      Keymaster.store_for(klass).new(klass)
     end
     
     def self.key_for(object)
@@ -47,7 +47,7 @@ module Treasury
       new_objects = []
       old_objects = []
       objects.each do |object|
-        if Identifier.new?(object)
+        if Keymaster.new?(object)
           new_objects << object
         else
           old_objects << object
