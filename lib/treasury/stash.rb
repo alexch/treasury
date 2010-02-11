@@ -29,7 +29,7 @@ module Treasury
           put(o)
         end
       else
-        key = Identifier.id(object)
+        key = Identifier.key_for(object)
         raise Unidentified, "you can't stash an object without an id" unless key
         @data[key] = object
       end

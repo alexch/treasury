@@ -31,7 +31,7 @@ module Treasury
       store_for(object).new?(object)
     end
     
-    def self.id(object)
+    def self.key_for(object)
       if new?(object)
         nil
       else

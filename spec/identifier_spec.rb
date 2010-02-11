@@ -38,19 +38,19 @@ module Treasury
       end
     end
 
-    describe 'id' do
+    describe 'key_for' do
       it "works on a new ActiveRecord object" do
-        Identifier.id(ActiveUser.new).should be_nil
+        Identifier.key_for(ActiveUser.new).should be_nil
       end
       it "works on a saved ActiveRecord object" do
-        Identifier.id(ActiveUser.create).should_not be_nil
+        Identifier.key_for(ActiveUser.create).should_not be_nil
       end
       it "works on a new Treasure" do
-        Identifier.id(User.new).should be_nil
+        Identifier.key_for(User.new).should be_nil
       end
       it "works on a new Treasure" do
         user = User.new(:id => 1)
-        Identifier.id(user).should == 1
+        Identifier.key_for(user).should == 1
       end
     end
   end
