@@ -5,7 +5,7 @@ module Treasury
   # storage) and ActiveRecord (and in future, DataMapper, Sequel, Aqua, 
   # etc.) The base class will raise Unimplemented if a subclass 
   # neglects to implement a required method, viz. #size, #clear, #put_new,
-  # #put_old, #find_by_ids, and #find_by_criterion
+  # #put_old, #find_by_keys, and #find_by_criterion
 
   class Store
 
@@ -57,9 +57,9 @@ module Treasury
       put_old(old_objects) unless old_objects.empty?
     end
 
-    # get an object by id
+    # get an object by key
     def get(key)
-      find_by_ids([key]).first
+      find_by_keys([key]).first
     end
 
     # alias for get
@@ -68,15 +68,15 @@ module Treasury
     end
 
     # Finds all stashed objects that match the argument. Argument is either
-    # a criterion, an id, or an array of either ids or criteria.
+    # a criterion, an key, or an array of either keys or criteria.
     # Returns an array of objects.
     def find(arg)
       if arg.is_a? Criterion
         find_by_criterion(arg)
       elsif arg.is_a? Array
-        find_by_ids(arg)
+        find_by_keys(arg)
       else
-        find_by_ids([arg])
+        find_by_keys([arg])
       end
     end
     
@@ -94,7 +94,7 @@ module Treasury
       raise Unimplemented
     end
     
-    def find_by_ids(ids)
+    def find_by_keys(keys)
       raise Unimplemented
     end
     

@@ -45,7 +45,7 @@ module Treasury
         raise Unimplemented
       end
 
-      def find_by_ids(ids)
+      def find_by_keys(keys)
         raise Unimplemented
       end
       

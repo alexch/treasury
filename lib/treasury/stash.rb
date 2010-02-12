@@ -1,6 +1,6 @@
 # a Stash is a glorified hashtable, used for keeping objects in memory
-# and indexing them by id. Any objects put into the stash must have an
-# id, as identified by the Keymaster class. A stash is used by Repository
+# and indexing them by key. Any objects put into the stash must have an
+# key, as identified by the Keymaster class. A stash is used by Repository
 # to keep the objects it recieves from its Store.
 module Treasury
   class Stash
@@ -35,7 +35,7 @@ module Treasury
       end
     end
 
-    # get an object by id
+    # get an object by key
     def get(key)
       @data[key]
     end
@@ -43,7 +43,7 @@ module Treasury
     alias_method :[], :get
 
     # Finds all stashed objects that match the argument. Argument is either
-    # a criterion, an id, or an array of either ids or criteria.
+    # a criterion, an key, or an array of either keys or criteria.
     # Returns an array of objects.
     def find(arg)
       if arg.is_a? Criterion

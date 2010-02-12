@@ -2,3 +2,4 @@ TODO
 -----
 change "id" to "key" and allow other field names to be keys
 merge Keymaster into Store
+document and test DSL

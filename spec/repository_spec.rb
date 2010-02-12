@@ -2,9 +2,9 @@ require File.expand_path("#{File.dirname(__FILE__)}/spec_helper")
 
 =begin
 Repository needs to
-* take a list of objects with ids and stash theme
-* take a (class and a) list of ids and retrieve them from the stash only
-* when given a list of ids, it asks the store for the unfound remainder
+* take a list of objects with keys and stash theme
+* take a (class and a) list of keys and retrieve them from the stash only
+* when given a list of keys, it asks the store for the unfound remainder
 * when asking the store for anything, it stashes them on the way back
 * the stash should expire old items based on some algorithm
 * take a query and retrieve them from the stash only
@@ -137,7 +137,7 @@ module Treasury
         # User.should_receive(:find).with(*args_for_finding([99])).and_return([])
         repository[99].should == nil
         @output.string.should =~ /Treasury::User Repository hitting DB from/
-        @output.string.should =~ /Warning: couldn't find 1 out of 1 Treasury::Users: missing ids 99/
+        @output.string.should =~ /Warning: couldn't find 1 out of 1 Treasury::Users: missing keys 99/
       end
 
       it "finds an object by string id" do
@@ -200,15 +200,15 @@ module Treasury
         repository.search([igor.id, frank.id]).should == [igor, frank]
       end
 
-      it "works ok even if there are duplicate ids" do
+      it "works ok even if there are duplicate keys" do
         repository.put([frank, igor])
         repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
       end
 
-      it "only requests unique ids from store if there are duplicate ids" do
+      it "only requests unique keys from store if there are duplicate keys" do
         frank.save!
         igor.save!
-        repository.store.should_receive(:find_by_ids).with([frank.id, igor.id]).and_return([frank, igor])
+        repository.store.should_receive(:find_by_keys).with([frank.id, igor.id]).and_return([frank, igor])
         repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
         @output.string.should =~ /Treasury::User Repository hitting DB from/
       end
@@ -248,12 +248,12 @@ module Treasury
         @repository.put([@frank, @igor, @elsa])
       end
 
-      it 'performs a search and pulls out the ids' do
+      it 'performs a search and pulls out the keys' do
         criterion = Criterion::Contains.new(:subject => "name", :value => "a")
         @repository.extract(criterion).should include_only(@frank.id, @elsa.id)
       end
 
-      it 'performs a search with a block and pulls out the ids' do
+      it 'performs a search with a block and pulls out the keys' do
         @repository.extract do |user|
           user.contains(:name,  "a")
         end.should include_only(@frank.id, @elsa.id)

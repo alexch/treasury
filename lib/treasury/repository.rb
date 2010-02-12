@@ -36,8 +36,8 @@ module Treasury
       end
     end
 
-    def [](id)
-      objects = search(id)
+    def [](key)
+      objects = search(key)
       if objects.empty?
         nil
       else
@@ -54,13 +54,13 @@ module Treasury
       
       case arg
       when Array
-        find_ids(arg)
+        find_keys(arg)
       when Fixnum
-        find_ids([arg])
-      when Criterion::Id
-        find_ids_in_criterion(arg)
+        find_keys([arg])
+      when Criterion::Key
+        find_keys_in_criterion(arg)
       when String
-        find_ids([arg.to_i])
+        find_keys([arg.to_i])
       when Criterion
         find_by_criterion(arg)
       else
@@ -78,20 +78,20 @@ module Treasury
     
     protected
 
-    def find_ids_in_criterion(criterion)
-      find_ids(criterion.value)
+    def find_keys_in_criterion(criterion)
+      find_keys(criterion.value)
     end
     
-    def find_ids(ids)
-      raise "Nil argument" if ids.nil?
+    def find_keys(keys)
+      raise "Nil argument" if keys.nil?
       
       found = []
       needed = []
-      ids.each do |id|
-        raise ArgumentError, "illegal argument #{id.inspect}" if id.to_i == 0
-        id = id.to_i
-        unless (object = @stash[id])
-          needed << id
+      keys.each do |key|
+        raise ArgumentError, "illegal argument #{key.inspect}" if key.to_i == 0
+        key = key.to_i
+        unless (object = @stash[key])
+          needed << key
         end
       end
 
@@ -102,13 +102,13 @@ module Treasury
         found_in_store = store.find(needed).compact
 
         if found_in_store.size != needed.size
-          missing = (needed - found_in_store.map(&:id))
-          ActiveRecord::Base.logger.warn "Warning: couldn't find #{missing.size} out of #{needed.size} #{klass.name.pluralize}: missing ids #{missing.join(',')}"
+          missing = (needed - found_in_store.map(&:key))
+          ActiveRecord::Base.logger.warn "Warning: couldn't find #{missing.size} out of #{needed.size} #{klass.name.pluralize}: missing keys #{missing.join(',')}"
         end
 
         put(found_in_store)
       end
-      ids.map{|id| @stash[id]} # find again so they come back in order
+      keys.map{|key| @stash[key]} # find again so they come back in order
     end
     
     def find_by_criterion(criterion)

@@ -119,7 +119,7 @@ module Treasury
             stash.put(@igor)
           end
           
-          it "finds an object by an array of ids" do
+          it "finds an object by an array of keys" do
             stash.find([@frank.id, @igor.id]).should include_only [@frank, @igor]
           end
 
@@ -149,11 +149,11 @@ module Treasury
     #         stash.find([igor.id, @frank.id]).should == [igor, @frank]
     #       end
     # 
-    #       it "works ok even if there are duplicate ids" do
+    #       it "works ok even if there are duplicate keys" do
     #         stash.find([@frank.id, igor.id, @frank.id, @frank.id, igor.id]).should == [@frank, igor, @frank, @frank, igor]
     #       end
     # 
-    #       it "only sends unique ids to ActiveRecord if there are duplicate ids" do
+    #       it "only sends unique keys to ActiveRecord if there are duplicate keys" do
     #         User.should_receive(:find).with([@frank.id, igor.id]).and_return([@frank, igor])
     #         stash.find([@frank.id, igor.id, @frank.id, @frank.id, igor.id]).should == [@frank, igor, @frank, @frank, igor]
     #       end

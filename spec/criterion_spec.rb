@@ -107,9 +107,9 @@ module Treasury
       end
     end
     
-    describe Criterion::Id do
+    describe Criterion::Key do
       before do
-        @c = Criterion::Id.new(:value => "1")
+        @c = Criterion::Key.new(:value => "1")
       end
 
       it "uses 'id' as its subject" do
@@ -121,12 +121,12 @@ module Treasury
       end
 
       it "uses IN if the value is an array" do
-        @c = Criterion::Id.new(:value => [1,2,3])
+        @c = Criterion::Key.new(:value => [1,2,3])
         @c.sql.should == ["id IN (?)", [1,2,3]]
       end
 
       it "has a swell descriptor" do
-        Criterion::Id.new({}).descriptor.should == "#"
+        Criterion::Key.new({}).descriptor.should == "#"
       end
 
       it "converts its value to an integer" do
@@ -144,7 +144,7 @@ module Treasury
 
         describe "a set of ints" do
           before do
-            @c = Criterion::Id.new(:value => [1,2])
+            @c = Criterion::Key.new(:value => [1,2])
           end
 
           it "matches" do
@@ -160,7 +160,7 @@ module Treasury
 
       describe "a string value in the criterion" do
         it "should match an int value in the object" do
-          @c = Criterion::Id.new(:value => "1")
+          @c = Criterion::Key.new(:value => "1")
           @c.should be_match @alice            
         end
       end
@@ -401,18 +401,18 @@ module Treasury
 
     describe Criterion::Conjunction do
       it "nested criteria flatten out OK" do
-        action_ids = [1,2,3]
-        more_action_ids = [4,5,6]
+        action_keys = [1,2,3]
+        more_action_keys = [4,5,6]
         c = (Treasury::Criterion::Equals.new(:subject => 'active', :value => true) +
-              (Treasury::Criterion::Id.new(:subject => 'upstream_action_id', :value => action_ids) | 
-               Treasury::Criterion::Id.new(:subject => 'downstream_action_id', :value => more_action_ids)))
+              (Treasury::Criterion::Key.new(:subject => 'upstream_action_id', :value => action_keys) | 
+               Treasury::Criterion::Key.new(:subject => 'downstream_action_id', :value => more_action_keys)))
         c.sql.should == 
-         ["(active = ?) AND ((upstream_action_id IN (?)) OR (downstream_action_id IN (?)))", true, action_ids, more_action_ids]
+         ["(active = ?) AND ((upstream_action_id IN (?)) OR (downstream_action_id IN (?)))", true, action_keys, more_action_keys]
       end
     end
     
     describe Criterion::Extract do
-      it "performs a search and extracts the ids from its results" do
+      it "performs a search and extracts the keys from its results" do
         Treasury[User] << [@alice, @bob, @charlie]
         nested_criterion = Criterion::Contains.new(:subject => "name", :value => "a")
         User.should_receive(:find).with(:all, {:conditions => ["LOWER(name) LIKE ?", '%a%']}).and_return([@alice, @charlie])

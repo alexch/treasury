@@ -27,8 +27,8 @@ module Treasury
       put_old(objects)
     end
 
-    def find_by_ids(ids)
-      @klass.find(:all, :conditions => ["id IN (?)", ids])
+    def find_by_keys(keys)
+      @klass.find(:all, :conditions => ["id IN (?)", keys])
     end
 
     def find_by_criterion(criterion)

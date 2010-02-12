@@ -27,8 +27,8 @@ module Treasury
       @stash.find(criterion)
     end
 
-    def find_by_ids(ids)
-      @stash.find(ids)
+    def find_by_keys(keys)
+      @stash.find(keys)
     end
 
   end

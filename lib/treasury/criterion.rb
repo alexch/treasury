@@ -89,16 +89,16 @@ public
       end
     end
 
-    class Id < Equals
-      def Factory.id(*args)
+    class Key < Equals
+      def Factory.key(*args)
         if args.length == 1
-          subject = :id
+          subject = :key
           value = args.first
         else
           subject = args.shift
           value = args.shift
         end
-        Id.new(:subject => subject, :value => value)
+        Key.new(:subject => subject, :value => value)
       end
       
       def initialize(options)
