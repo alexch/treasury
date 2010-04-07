@@ -26,8 +26,14 @@ module Treasury
 
     def store(*arg)
       arg.flatten!
-      arg.each do |object|
-        raise ArgumentError, "expected #{@klass} but got #{object.class}" unless object.is_a?(klass)
+      arg = arg.select do |object|
+        if object.is_a?(Fixnum)
+          false
+        elsif !object.is_a?(klass)
+          raise ArgumentError, "expected #{@klass} but got #{object.class}"
+        else
+          true
+        end
       end
       storage.store(arg)
       @stash.put(arg)
@@ -112,7 +118,7 @@ module Treasury
     end
     
     def find_by_criterion(criterion)
-      results = storage.find(criterion)
+      results = criterion.find_in(storage)
       self << results
       results
     end

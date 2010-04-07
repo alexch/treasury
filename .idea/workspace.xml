@@ -2,27 +2,13 @@
 <project version="4">
   <component name="ChangeListManager" verified="true">
     <list default="true" readonly="true" id="7c6fbe3f-7608-49cc-bc6e-58448581451b" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/treasury/store.rb" afterPath="$PROJECT_DIR$/lib/treasury/storage.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/domain.rb" afterPath="$PROJECT_DIR$/spec/domain.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/treasury.rb" afterPath="$PROJECT_DIR$/lib/treasury.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/repository_spec.rb" afterPath="$PROJECT_DIR$/spec/repository_spec.rb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/treasury/active_record_store.rb" afterPath="$PROJECT_DIR$/lib/treasury/active_record_storage.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/stash_spec.rb" afterPath="$PROJECT_DIR$/spec/stash_spec.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/treasury/keymaster.rb" afterPath="$PROJECT_DIR$/lib/treasury/keymaster.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/treasury_spec.rb" afterPath="$PROJECT_DIR$/spec/treasury_spec.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/keymaster_spec.rb" afterPath="$PROJECT_DIR$/spec/keymaster_spec.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/treasury/stash.rb" afterPath="$PROJECT_DIR$/lib/treasury/stash.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/treasury/repository.rb" afterPath="$PROJECT_DIR$/lib/treasury/repository.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todo.txt" afterPath="$PROJECT_DIR$/todo.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/treasury.rb" afterPath="$PROJECT_DIR$/lib/treasury.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/criterion_spec.rb" afterPath="$PROJECT_DIR$/spec/criterion_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rakefile" afterPath="$PROJECT_DIR$/Rakefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/treasury.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/treasury/stash_store.rb" afterPath="$PROJECT_DIR$/lib/treasury/stash_storage.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/store_spec.rb" afterPath="$PROJECT_DIR$/spec/store_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/treasury/criterion.rb" afterPath="$PROJECT_DIR$/lib/treasury/criterion.rb" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="treasury.iws" />
@@ -46,28 +32,46 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="repository_spec.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spec/repository_spec.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="225" column="6" selection-start="7123" selection-end="7123" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="repository.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/treasury/repository.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="13" selection-start="738" selection-end="741" vertical-scroll-proportion="-15.153846">
+            <state line="91" column="13" selection-start="1987" selection-end="1987" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="criterion_spec.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="array.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_HOME_DIR$/rubystubs18/array.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="837" column="6" selection-start="21401" selection-end="21401" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="criterion_spec.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spec/criterion_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="419" column="0" selection-start="12919" selection-end="12919" vertical-scroll-proportion="0.0">
+            <state line="442" column="0" selection-start="13851" selection-end="13851" vertical-scroll-proportion="0.8546042">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="treasury.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/treasury.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="50" column="17" selection-start="948" selection-end="948" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="criterion.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/treasury/criterion.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="114" column="18" selection-start="2651" selection-end="2651" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -76,7 +80,16 @@
       <file leaf-file-name="storage.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/treasury/storage.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="8" selection-start="2025" selection-end="2025" vertical-scroll-proportion="0.0">
+            <state line="92" column="0" selection-start="2083" selection-end="2083" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="active_record_storage.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/treasury/active_record_storage.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="8" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -85,16 +98,16 @@
       <file leaf-file-name="domain.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/domain.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="0" selection-start="777" selection-end="777" vertical-scroll-proportion="0.0">
+            <state line="36" column="0" selection-start="608" selection-end="608" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stash_storage.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="stash_storage.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/treasury/stash_storage.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="0" selection-start="396" selection-end="396" vertical-scroll-proportion="0.36893204">
+            <state line="22" column="0" selection-start="396" selection-end="396" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -104,15 +117,6 @@
         <entry file="file://$PROJECT_DIR$/spec/stash_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state line="188" column="24" selection-start="5618" selection-end="5618" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="treasury_spec.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spec/treasury_spec.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="29" selection-start="2139" selection-end="2139" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -128,7 +132,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/lib/treasury/stash.rb" />
         <option value="$PROJECT_DIR$/lib/treasury/stash_store.rb" />
         <option value="$PROJECT_DIR$/lib/treasury/store.rb" />
         <option value="$PROJECT_DIR$/spec/keymaster_spec.rb" />
@@ -137,13 +140,14 @@
         <option value="$PROJECT_DIR$/lib/treasury/active_record_storage.rb" />
         <option value="$PROJECT_DIR$/spec/store_spec.rb" />
         <option value="$PROJECT_DIR$/lib/treasury/storage.rb" />
-        <option value="$PROJECT_DIR$/spec/criterion_spec.rb" />
         <option value="$PROJECT_DIR$/lib/treasury.rb" />
         <option value="$PROJECT_DIR$/spec/repository_spec.rb" />
         <option value="$PROJECT_DIR$/spec/treasury_spec.rb" />
-        <option value="$PROJECT_DIR$/spec/domain.rb" />
-        <option value="$PROJECT_DIR$/lib/treasury/repository.rb" />
         <option value="$PROJECT_DIR$/lib/treasury/stash_storage.rb" />
+        <option value="$PROJECT_DIR$/lib/treasury/criterion.rb" />
+        <option value="$PROJECT_DIR$/lib/treasury/repository.rb" />
+        <option value="$PROJECT_DIR$/spec/domain.rb" />
+        <option value="$PROJECT_DIR$/spec/criterion_spec.rb" />
       </list>
     </option>
   </component>
@@ -183,35 +187,12 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="preferences.keymap" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Ruby" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="GoToClass.includeJavaFiles" value="false" />
   </component>
-  <component name="RunManager" selected="RSpec.all">
-    <configuration default="false" name="Extract performs a search and extracts the keys from its results" type="RSpecRunConfigurationType" factoryName="RSpec" temporary="true">
-      <predefined_log_file id="RUBY_RSPEC" enabled="true" />
-      <module name="treasury" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e STDOUT.sync=true;STDERR.sync=true;load($0=ARGV.shift)" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
-      <envs />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$PROJECT_DIR$/spec/criterion_spec.rb" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_RUNNER_PATH" VALUE="[none]" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*_spec.rb" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_EXAMPLE_NAME" VALUE="Extract performs a search and extracts the keys from its results" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_ARGS" VALUE="" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_SPEC_RUNNER" VALUE="false" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
-      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
-      <RunnerSettings RunnerId="RubyRunner" />
-      <ConfigurationWrapper RunnerId="RubyRunner" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="RSpec.criterion_spec">
     <configuration default="false" name="repository_spec" type="RSpecRunConfigurationType" factoryName="RSpec" temporary="true">
       <predefined_log_file id="RUBY_RSPEC" enabled="true" />
       <module name="treasury" />
@@ -249,6 +230,75 @@
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_RUNNER_PATH" VALUE="[none]" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*_spec.rb" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_EXAMPLE_NAME" VALUE=" has a size after an object's been put into it" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_ARGS" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_SPEC_RUNNER" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="ExtractKeys performs a search and extracts the keys from its results" type="RSpecRunConfigurationType" factoryName="RSpec" temporary="true">
+      <predefined_log_file id="RUBY_RSPEC" enabled="true" />
+      <module name="treasury" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e STDOUT.sync=true;STDERR.sync=true;load($0=ARGV.shift)" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$PROJECT_DIR$/spec/criterion_spec.rb" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_RUNNER_PATH" VALUE="[none]" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*_spec.rb" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_EXAMPLE_NAME" VALUE="ExtractKeys performs a search and extracts the keys from its results" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_ARGS" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_SPEC_RUNNER" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="ExtractKeys can be used as the target of an Equals criterion" type="RSpecRunConfigurationType" factoryName="RSpec" temporary="true">
+      <predefined_log_file id="RUBY_RSPEC" enabled="true" />
+      <module name="treasury" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e STDOUT.sync=true;STDERR.sync=true;load($0=ARGV.shift)" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$PROJECT_DIR$/spec/criterion_spec.rb" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_RUNNER_PATH" VALUE="[none]" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*_spec.rb" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_EXAMPLE_NAME" VALUE="ExtractKeys can be used as the target of an Equals criterion" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_ARGS" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_SPEC_RUNNER" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="criterion_spec" type="RSpecRunConfigurationType" factoryName="RSpec" temporary="true">
+      <predefined_log_file id="RUBY_RSPEC" enabled="true" />
+      <module name="treasury" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e STDOUT.sync=true;STDERR.sync=true;load($0=ARGV.shift)" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$PROJECT_DIR$/spec/criterion_spec.rb" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_RUNNER_PATH" VALUE="[none]" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*_spec.rb" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_EXAMPLE_NAME" VALUE="" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_ARGS" VALUE="" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_SPEC_RUNNER" VALUE="false" />
@@ -335,11 +385,13 @@
       <ConfigurationWrapper RunnerId="RubyRunner" />
       <method />
     </configuration>
-    <list size="4">
+    <list size="6">
       <item index="0" class="java.lang.String" itemvalue="RSpec.all" />
-      <item index="1" class="java.lang.String" itemvalue="RSpec.Extract performs a search and extracts the keys from its results" />
-      <item index="2" class="java.lang.String" itemvalue="RSpec.repository_spec" />
-      <item index="3" class="java.lang.String" itemvalue="RSpec. has a size after an object's been put into it" />
+      <item index="1" class="java.lang.String" itemvalue="RSpec.repository_spec" />
+      <item index="2" class="java.lang.String" itemvalue="RSpec. has a size after an object's been put into it" />
+      <item index="3" class="java.lang.String" itemvalue="RSpec.ExtractKeys performs a search and extracts the keys from its results" />
+      <item index="4" class="java.lang.String" itemvalue="RSpec.ExtractKeys can be used as the target of an Equals criterion" />
+      <item index="5" class="java.lang.String" itemvalue="RSpec.criterion_spec" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -361,17 +413,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="36" y="22" width="1244" height="760" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32882884" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32882884" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.45945945" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53003" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -409,11 +461,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/treasury/keymaster.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="8" selection-start="932" selection-end="932" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/todo.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="3" selection-start="126" selection-end="126" vertical-scroll-proportion="0.0" />
@@ -422,20 +469,6 @@
     <entry file="file://$PROJECT_DIR$/lib/treasury/stash.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="4" selection-start="733" selection-end="733" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/treasury.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="21" selection-start="1049" selection-end="1049" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/treasury/active_record_storage.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="6" selection-start="465" selection-end="465" vertical-scroll-proportion="2.8181818">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file:///Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_methods.rb">
@@ -452,30 +485,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spec/store_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="20" selection-start="223" selection-end="223" vertical-scroll-proportion="0.65217394">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spec/treasury_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="82" column="29" selection-start="2139" selection-end="2139" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/treasury/storage.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="8" selection-start="2025" selection-end="2025" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/domain.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="0" selection-start="777" selection-end="777" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -494,23 +506,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spec/criterion_spec.rb">
+    <entry file="file://$PROJECT_DIR$/lib/treasury/storage.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="419" column="0" selection-start="12919" selection-end="12919" vertical-scroll-proportion="0.0">
+        <state line="92" column="0" selection-start="2083" selection-end="2083" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/treasury/repository.rb">
+    <entry file="file://$PROJECT_DIR$/lib/treasury/active_record_storage.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="13" selection-start="738" selection-end="741" vertical-scroll-proportion="-15.153846">
+        <state line="38" column="8" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/treasury/stash_storage.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="396" selection-end="396" vertical-scroll-proportion="0.36893204">
+        <state line="22" column="0" selection-start="396" selection-end="396" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/rubystubs18/array.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="837" column="6" selection-start="21401" selection-end="21401" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/domain.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="0" selection-start="608" selection-end="608" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/treasury.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="17" selection-start="948" selection-end="948" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/treasury/criterion.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="114" column="18" selection-start="2651" selection-end="2651" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/treasury/repository.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="13" selection-start="1987" selection-end="1987" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/criterion_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="442" column="0" selection-start="13851" selection-end="13851" vertical-scroll-proportion="0.8546042">
           <folding />
         </state>
       </provider>

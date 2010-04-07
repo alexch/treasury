@@ -56,6 +56,11 @@ module Treasury
       Or.new(self, other)
     end
 
+    # todo: test method?
+    def find_in(storage)
+      storage.find(self)
+    end
+
 protected
     def match_value?(criterion_value, object_value)
       false
@@ -210,7 +215,16 @@ public
       end
     end
 
-    class Extract < Criterion
+    class ExtractKeys < Criterion
+      def initialize(options)
+        @nested_criterion = options[:criterion]
+        super(options)
+      end
+
+      def find_in(storage)
+        objects = storage.find(@nested_criterion)
+        objects.map(&:id)
+      end
     end
   end
 end
