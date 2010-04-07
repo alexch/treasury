@@ -1,9 +1,12 @@
 module Treasury 
-  class StashStore < Store
+  class StashStorage < Storage
 
     attr_reader :stash
     
-    def initialize(stash = Stash.new)
+    def initialize(klass, stash = Stash.new)
+      raise "nope" if klass.is_a? Stash
+      raise "nuh-uh" unless stash.is_a? Stash
+      super(klass)
       @stash = stash
     end
     
@@ -15,11 +18,11 @@ module Treasury
       @stash.clear
     end
 
-    def put_old(objects)
+    def store_old(objects)
       @stash.put(objects)
     end
 
-    def put_new(objects)
+    def store_new(objects)
       raise Unimplemented
     end
 

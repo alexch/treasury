@@ -2,10 +2,10 @@ require 'treasury/monkey_patches'
 require 'treasury/criterion'
 require 'treasury/repository'
 require 'treasury/keymaster'
-require 'treasury/store'
+require 'treasury/storage'
 require 'treasury/stash'
-require 'treasury/stash_store'
-require 'treasury/active_record_store'
+require 'treasury/stash_storage'
+require 'treasury/active_record_storage'
 
 module Treasury
   
@@ -43,10 +43,10 @@ module Treasury
     repository.size
   end
   
-  def put(*args)
-    repository.put(*args)
+  def store(*args)
+    repository.store(*args)
   end
-  
+
   def search(*args, &block)
     repository.search(*args, &block)
   end
@@ -56,7 +56,7 @@ module Treasury
   end
   
   def <<( *treasure )
-    put( *treasure )
+    store( *treasure )
   end
   
   def [](arg)
@@ -70,8 +70,8 @@ module Treasury
   end
   
   module InstanceMethods
-    def put
-      self.class.put(self)
+    def store
+      self.class.store(self)
     end
   end
   

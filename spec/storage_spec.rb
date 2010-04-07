@@ -3,28 +3,28 @@ require  "#{here}/spec_helper"
 require  "#{here}/active_record_spec_helper"
 
 module Treasury
-  describe Store do
+  describe Storage do
     
     describe '#for_class' do      
-      it "returns a TreasureStore for Treasure objects" do
-        (Store.for_class(Treasure).is_a? TreasureStore).should be_true
-        (Store.for_class(User).is_a? TreasureStore).should be_true
+      it "returns a TreasureStorage for Treasure objects" do
+        (Storage.for_class(Treasure).is_a? TreasureStorage).should be_true
+        (Storage.for_class(User).is_a? TreasureStorage).should be_true
       end
 
       class FairyDust
         extend Treasury
       end
 
-      it "returns a StashStore for Treasury objects" do
-        (Store.for_class(FairyDust).is_a? StashStore).should be_true
+      it "returns a StashStorage for Treasury objects" do
+        (Storage.for_class(FairyDust).is_a? StashStorage).should be_true
       end
 
-      it "returns an ActiveRecordStore for AR models" do
-        (Store.for_class(ActiveUser).is_a? ActiveRecordStore).should be_true
+      it "returns an ActiveRecordStorage for AR models" do
+        (Storage.for_class(ActiveUser).is_a? ActiveRecordStorage).should be_true
       end
     end
     
-    class TestStore < Store
+    class TestStorage < Storage
       def size
         raise Unimplemented
       end
@@ -33,11 +33,11 @@ module Treasury
         raise Unimplemented
       end
 
-      def put_old(objects)
+      def store_old(objects)
         raise Unimplemented
       end
 
-      def put_new(objects)
+      def store_new(objects)
         raise Unimplemented
       end
 

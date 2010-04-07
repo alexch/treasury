@@ -23,7 +23,7 @@ module Treasury
     end
 
     it "fails if you try to put an object without a id" do
-      lambda { stash.put(User.new) }.should raise_error(Store::Unidentified)
+      lambda { stash.put(User.new) }.should raise_error(Storage::Unidentified)
     end
 
     it "has a size after an object's been put into it" do

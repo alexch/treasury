@@ -4,21 +4,21 @@ require  "#{here}/active_record_spec_helper"
 
 module Treasury
   describe Keymaster do
-    it 'can look up the store for an object by its class' do
-      Keymaster.store_for(ActiveUser.new).should == ActiveRecordStore
-      Keymaster.store_for(User.new).should == TreasureStore
+    it 'can look up the storage for an object by its class' do
+      Keymaster.storage_for(ActiveUser.new).should == ActiveRecordStorage
+      Keymaster.storage_for(User.new).should == TreasureStorage
     end
     
     describe 'register' do
       class Unobtainium
       end
-      class UnobtainiumStore < Store
+      class UnobtainiumStorage < Storage
       end
-      it 'inserts a store into the registry' do
+      it 'inserts a storage into the registry' do
         object = Unobtainium.new
-        lambda { Keymaster.store_for(object) }.should raise_error
-        Keymaster.register(Unobtainium, UnobtainiumStore)
-        Keymaster.store_for(object).should == UnobtainiumStore
+        lambda { Keymaster.storage_for(object) }.should raise_error
+        Keymaster.register(Unobtainium, UnobtainiumStorage)
+        Keymaster.storage_for(object).should == UnobtainiumStorage
       end
     end
     

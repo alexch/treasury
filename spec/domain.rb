@@ -39,14 +39,14 @@ module Treasury
   class Country < Treasure
   end
 
-  class TreasureStore < StashStore
-    def put_new(objects)
+  class TreasureStorage < StashStorage
+    def store_new(objects)
       objects.each do |object|
         object.save!
       end
-      put_old(objects)
+      store_old(objects)
     end
   end
   
-  Keymaster.register(Treasure, TreasureStore)
+  Keymaster.register(Treasure, TreasureStorage)
 end

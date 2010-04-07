@@ -4,12 +4,12 @@ module Treasury
   class Repository
 
     attr_reader :klass
-    attr_accessor :store
+    attr_accessor :storage
 
     def initialize(klass)
       @klass = klass
       @stash = Stash.new
-      @store = Keymaster.store_for(klass).new
+      @storage = Keymaster.storage_for(klass).new(klass)
     end
 
     def size
@@ -21,15 +21,15 @@ module Treasury
     end
 
     def <<(args)
-      put(args)
+      store(args)
     end
 
-    def put(*arg)
+    def store(*arg)
       arg.flatten!
       arg.each do |object|
         raise ArgumentError, "expected #{@klass} but got #{object.class}" unless object.is_a?(klass)
       end
-      store.put(arg)
+      storage.store(arg)
       @stash.put(arg)
       arg.each do |object|
         object.entered_repository if object.respond_to?(:entered_repository)
@@ -69,7 +69,7 @@ module Treasury
     end
     
     def extract(arg = nil, &block)
-      search(arg, &block).map{|o| @store.class.key_for(o)}
+      search(arg, &block).map{|o| @storage.class.key_for(o)}
     end
 
     def criterion_from
@@ -99,20 +99,20 @@ module Treasury
         needed.sort!.uniq! # the sort is just to make debugging easier
         ActiveRecord::Base.logger.info("#{klass.name} Repository hitting DB from #{calling_function}")
 
-        found_in_store = store.find(needed).compact
+        found_in_storage = storage.find(needed).compact
 
-        if found_in_store.size != needed.size
-          missing = (needed - found_in_store.map(&:key))
+        if found_in_storage.size != needed.size
+          missing = (needed - found_in_storage.map(&:key))
           ActiveRecord::Base.logger.warn "Warning: couldn't find #{missing.size} out of #{needed.size} #{klass.name.pluralize}: missing keys #{missing.join(',')}"
         end
 
-        put(found_in_store)
+        store(found_in_storage)
       end
       keys.map{|key| @stash[key]} # find again so they come back in order
     end
     
     def find_by_criterion(criterion)
-      results = store.find(criterion)
+      results = storage.find(criterion)
       self << results
       results
     end

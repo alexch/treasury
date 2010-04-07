@@ -15,7 +15,7 @@ module Treasury
     end
 
     it "can clear all" do
-      Treasury[Thing].put([Thing.new, Thing.new])
+      Treasury[Thing].store([Thing.new, Thing.new])
       Treasury[Thing].size.should == 2
       Treasury.clear_all
       Treasury[Thing].size.should == 0
@@ -52,7 +52,7 @@ module Treasury
       
       it 'should have a #treasury_size and #put' do
         Animal.treasury_size.should == 0
-        Animal.put(Animal.new, Animal.new)
+        Animal.store(Animal.new, Animal.new)
         Animal.treasury_size.should == 2
       end
       
@@ -71,35 +71,25 @@ module Treasury
       
       it 'should have a #search method' do
         find_me = Animal.new
-        Animal.put(find_me, Animal.new)
+        Animal.store(find_me, Animal.new)
         Animal.search(find_me.treasury_key).should == [find_me]
       end
       
       it '#search accepts a block which uses the factory DSL' do
         otter = Animal.new("otter")
-        Treasury[Animal].store.put(otter)
+        Treasury[Animal].storage.store(otter)
         Animal.search do |q|
           q.equals('name', "otter")
         end.should == [otter]
       end
       
       it 'should #clear_treasury' do
-        Animal.put(Animal.new, Animal.new)
+        Animal.store(Animal.new, Animal.new)
         Animal.treasury_size.should == 2 # just to check
         Animal.clear_treasury
         Animal.treasury_size.should == 0
       end
     end
     
-    describe 'instance methods' do
-      it 'should have a #put method' do
-        Treasury.clear_all
-        animal = Animal.new
-        animal.put
-        Animal.treasury_size.should == 1
-      end
-    end
-    
-     
   end
 end

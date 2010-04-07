@@ -1,5 +1,34 @@
 TODO
 -----
 change "id" to "key" and allow other field names to be keys
-merge Keymaster into Store
+merge Keymaster into Storage
 document and test DSL
+
+---
+
+caching vision
+
+key name:  key value => [LRU cache]
+query on LRU cache:
+look in cache
+if size(cache) == count(DB)
+  then done
+else
+  query DB
+  add results to cache (expiring old if full)
+  return union results
+end
+
+any unique property can be a key
+any compound can be a key
+
+query Lucene-type index for ids, then look up ids in cache
+
+Lucene index can do ranges with exponential breakdown
+
+something about a compound query *being* a key
+
+
+---
+
+look at http://github.com/seattlerb/cached_model

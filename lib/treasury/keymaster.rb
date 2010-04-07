@@ -8,34 +8,34 @@ end
 module Treasury
   class Keymaster
 
-    def self.register(object_class, store_class)
-      (@stores ||= {})[object_class] = store_class
+    def self.register(object_class, storage_class)
+      (@storages ||= {})[object_class] = storage_class
     end
     
-    def self.store_for(object)
-      (@stores ||= {}).each_pair do |object_class, store_class|
+    def self.storage_for(object)
+      (@storages ||= {}).each_pair do |object_class, storage_class|
         if (object.is_a?(Class) && object.ancestors.include?(object_class)) ||
            (object.is_a?(object_class))
-          return store_class
+          return storage_class
         end
       end
       
       if (object.is_a?(Class) && object.is_a?(Treasury)) ||
          (object.class.is_a?(Treasury))
-        return StashStore
+        return StashStorage
       end
-      raise "Couldn't find store class for #{object.inspect}"
+      raise "Couldn't find storage class for #{object.inspect}"
     end
     
     def self.new?(object)
-      store_for(object).new?(object)
+      storage_for(object).new?(object)
     end
     
     def self.key_for(object)
       if new?(object)
         nil
       else
-        store_for(object).key_for(object)
+        storage_for(object).key_for(object)
       end
     end
   end

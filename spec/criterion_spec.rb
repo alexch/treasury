@@ -413,7 +413,8 @@ module Treasury
     
     describe Criterion::Extract do
       it "performs a search and extracts the keys from its results" do
-        Treasury[User] << [@alice, @bob, @charlie]
+        t = Treasury[User]
+        t.store [@alice, @bob, @charlie]
         nested_criterion = Criterion::Contains.new(:subject => "name", :value => "a")
         User.should_receive(:find).with(:all, {:conditions => ["LOWER(name) LIKE ?", '%a%']}).and_return([@alice, @charlie])
         Treasury[User].search(nested_criterion).should include_only(@alice, @charlie)

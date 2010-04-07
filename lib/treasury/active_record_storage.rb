@@ -1,5 +1,5 @@
 module Treasury
-  class ActiveRecordStore < Store
+  class ActiveRecordStorage < Storage
 
     def self.key_for(object)
       object.id
@@ -7,6 +7,11 @@ module Treasury
     
     def self.new?(object)
       object.new_record?
+    end
+    
+    def initialize(klass)
+      raise "whoa" unless klass
+      super
     end
 
     def size
@@ -17,14 +22,14 @@ module Treasury
       @klass.delete_all
     end
 
-    def put_old(objects)
+    def store_old(objects)
       objects.each do |o|
         o.save!
       end
     end
 
-    def put_new(objects)
-      put_old(objects)
+    def store_new(objects)
+      store_old(objects)
     end
 
     def find_by_keys(keys)
@@ -37,5 +42,5 @@ module Treasury
 
   end
   
-  Keymaster.register(ActiveRecord::Base, ActiveRecordStore)
+  Keymaster.register(ActiveRecord::Base, ActiveRecordStorage)
 end

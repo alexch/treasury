@@ -1,19 +1,20 @@
-require File.expand_path("#{File.dirname(__FILE__)}/spec_helper")
+here = File.dirname(__FILE__)
+require File.expand_path("#{here}/spec_helper")
 
 =begin
 Repository needs to
 * take a list of objects with keys and stash theme
 * take a (class and a) list of keys and retrieve them from the stash only
-* when given a list of keys, it asks the store for the unfound remainder
-* when asking the store for anything, it stashes them on the way back
+* when given a list of keys, it asks the storage for the unfound remainder
+* when asking the storage for anything, it stashes them on the way back
 * the stash should expire old items based on some algorithm
 * take a query and retrieve them from the stash only
-* take a query and retrieve them from the store only (but stash them on the way back)
+* take a query and retrieve them from the storage only (but stash them on the way back)
 * chain queries, e.g. "get all addresses for all users whose zip is 90210"
-* store a list of items, replacing what's in the stash too
+* storage a list of items, replacing what's in the stash too
 * deal with relationships
 
-Store needs to
+Storage needs to
 * query
 
 Query/Criteria needs to
@@ -23,7 +24,7 @@ Query/Criteria needs to
 other features:
 * define a query with a DSL
 * "has_many" mixin
-* different stores for different classes
+* different storages for different classes
 
 =end
 
@@ -60,13 +61,13 @@ module Treasury
     end
 
     it "has a size after an object's been put into it" do
-      repository.put(frank)
+      repository.store(frank)
       repository.size.should == 1
     end
 
     describe "#clear" do
       it "clears" do
-        repository.put(frank)
+        repository.store(frank)
         repository.clear
         repository.size.should == 0
       end
@@ -75,26 +76,26 @@ module Treasury
     describe "#put" do
       it "saves a new record before sticking it in the repository" do
         frank.id.should be_nil
-        repository.put(frank)
+        repository.store(frank)
         frank.id.should_not be_nil
         repository[frank.id].should == frank
       end
 
       it "saves several new records" do
-        repository.put([frank, igor])
+        repository.store([frank, igor])
         frank.id.should_not be_nil
         igor.id.should_not be_nil
       end
 
       it "accepts an array of objects" do
-        repository.put([frank, igor])
+        repository.store([frank, igor])
         repository.size.should == 2
         repository[frank.id].should == frank
         repository[igor.id].should == igor
       end
       
       it "accepts an array of objects" do
-        repository.put(frank, igor)
+        repository.store(frank, igor)
         repository.size.should == 2
         repository[frank.id].should == frank
         repository[igor.id].should == igor
@@ -102,7 +103,7 @@ module Treasury
 
       it "freaks if you try to put an object of the wrong type" do
         lambda do
-          repository.put(@castle)
+          repository.store(@castle)
         end.should raise_error(ArgumentError)
       end
       
@@ -121,15 +122,15 @@ module Treasury
       it "doesn't freak if you put an object that's a subclass of the repository's type" do
         lambda do
           repository = Repository.new(Animal)
-          repository.put(Dog.new)
-          repository.put(Cat.new)
+          repository.store(Dog.new)
+          repository.store(Cat.new)
         end.should_not raise_error(ArgumentError)
       end
     end
 
     describe '#[]' do
       it "returns a single object" do
-        repository.put(frank)
+        repository.store(frank)
         repository[frank.id].should == frank
       end
 
@@ -141,14 +142,14 @@ module Treasury
       end
 
       it "finds an object by string id" do
-        repository.put(frank)
+        repository.store(frank)
         repository.search("#{frank.id}").should == [frank]
       end
     end
 
     describe "#search" do
       it "returns an array of objects" do
-        repository.put(frank)
+        repository.store(frank)
         x = repository.search(frank.id)
         x.should_not be_nil
         x.should == [frank]
@@ -156,31 +157,31 @@ module Treasury
       end
 
       it "returns several objects" do
-        repository.put(frank)
-        repository.put(igor)
+        repository.store(frank)
+        repository.store(igor)
         repository.search([frank.id, igor.id]).should == [frank, igor]
       end
 
       it "returns them in the presented order" do
-        repository.put(frank)
-        repository.put(igor)
+        repository.store(frank)
+        repository.store(igor)
         repository.search([igor.id, frank.id]).should == [igor, frank]
       end
 
       it "finds an object by id and puts it immediately" do
-        repository.store.put(frank)
+        repository.storage.store(frank)
         repository.search(frank.id).should == [frank]
         repository.size.should == 1
         repository[frank.id].should == frank
       end
 
       it "finds an object by string id" do
-        repository.put(frank)
+        repository.store(frank)
         repository.search("#{frank.id}").should == [frank]
       end
 
       it "finds a bunch of objects and puts them immediately" do
-        repository.put([frank, igor])
+        repository.store([frank, igor])
         repository.search([frank.id, igor.id]).should == [frank, igor]
         repository.size.should == 2
         repository[frank.id].should == frank
@@ -188,33 +189,33 @@ module Treasury
       end
 
       it "doesn't ask ActiveRecord to find objects if they're already in the repository" do
-        repository.put(frank)
-        repository.store.put(igor)
+        repository.store(frank)
+        repository.storage.store(igor)
         repository.search([frank.id, igor.id]).should == [frank, igor]
         @output.string.should =~ /Treasury::User Repository hitting DB from/
       end
 
       it "returns them in the presented order" do
-        repository.put([frank, igor])
+        repository.store([frank, igor])
         repository.search([frank.id, igor.id]).should == [frank, igor]
         repository.search([igor.id, frank.id]).should == [igor, frank]
       end
 
       it "works ok even if there are duplicate keys" do
-        repository.put([frank, igor])
+        repository.store([frank, igor])
         repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
       end
 
-      it "only requests unique keys from store if there are duplicate keys" do
+      it "only requests unique keys from storage if there are duplicate keys" do
         frank.save!
         igor.save!
-        repository.store.should_receive(:find_by_keys).with([frank.id, igor.id]).and_return([frank, igor])
+        repository.storage.should_receive(:find_by_keys).with([frank.id, igor.id]).and_return([frank, igor])
         repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
         @output.string.should =~ /Treasury::User Repository hitting DB from/
       end
 
       it "finds by criterion, and stashes the results for later" do
-        repository.store.put(frank)
+        repository.storage.store(frank)
         repository.size.should == 0
         criterion = Criterion::Equals.new(:subject => "name", :value => frank.name)
         repository.search(criterion).should == [frank]
@@ -223,7 +224,7 @@ module Treasury
       end
       
       it "accepts a block which uses the factory DSL" do
-        repository.store.put(frank)
+        repository.storage.store(frank)
         repository.search do |q|
           q.equals('name', frank.name)
         end.should == [frank]        
@@ -245,7 +246,7 @@ module Treasury
     
     describe '#extract' do
       before do
-        @repository.put([@frank, @igor, @elsa])
+        @repository.store([@frank, @igor, @elsa])
       end
 
       it 'performs a search and pulls out the keys' do
@@ -282,7 +283,7 @@ module Treasury
     it "calls #entered_repository after put" do
       repo = Repository.new(Dummy)
       dummy = Dummy.new
-      repo.put(dummy)
+      repo.store(dummy)
       dummy.entered.should be_true
     end
 

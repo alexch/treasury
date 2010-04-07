@@ -5,6 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "treasury"
+    gem.version = "0.1.0"
     gem.summary = %Q{Repository Pattern for Ruby}
     gem.description = %Q{Treasury sits on top of an ORM (ActiveRecord, DataMapper, Aqua, etc.) and provides an in-memory instance cache for your objects. It also provides a criteria DSL for making queries.}
     gem.email = "alex@stinky.com"
