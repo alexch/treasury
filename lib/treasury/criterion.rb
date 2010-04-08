@@ -56,7 +56,6 @@ module Treasury
       Or.new(self, other)
     end
 
-    # todo: test method?
     def find_in(storage)
       storage.find(self)
     end
@@ -143,14 +142,11 @@ public
       end
 
       def described_value
-        #todo: unify with superclass
-        if value.blank?
-          "any"
-        elsif value == 0
-          "none"
+        if value.blank? || value == 0
+          super
         else
           Treasury[@referent_class].search(@value).name
-        end      
+        end
       end
     end
 
