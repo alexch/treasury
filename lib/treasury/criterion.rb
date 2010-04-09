@@ -91,6 +91,15 @@ public
           ["#{property_name} = ?", value]
         end      
       end
+
+      def value
+        case @value
+        when Criterion
+          @value.value
+        else
+          @value
+        end
+      end
     end
 
     class Key < Equals
@@ -112,7 +121,9 @@ public
         when String
           [options[:value].to_i]
         when Array
-          options[:value].map{|v|v.to_i}
+          options[:value].map{|v|v.to_i} # todo: allow arrays of Criteria too
+        else
+          options[:value]
         end
         options[:descriptor] ||= "#"
         super(options)
@@ -138,7 +149,7 @@ public
       end
 
       def sql
-        ["#{@property_name} = ?", value]
+        ["#{property_name} = ?", value]
       end
 
       def described_value
@@ -156,7 +167,7 @@ public
       end
 
       def sql
-        ["LOWER(#{@property_name}) LIKE ?", "%#{value.downcase}%"]
+        ["LOWER(#{property_name}) LIKE ?", "%#{value.downcase}%"]
       end
 
       protected
@@ -212,14 +223,23 @@ public
     end
 
     class ExtractKeys < Criterion
+      attr_reader :referent_class
+
       def initialize(options)
+        super
         @nested_criterion = options[:criterion]
-        super(options)
+        @referent_class = options[:referent_class]
       end
 
       def find_in(storage)
         objects = storage.find(@nested_criterion)
         objects.map(&:id)
+      end
+
+      def value
+        @value ||= begin
+          Treasury[@referent_class].search(self)
+        end
       end
     end
   end

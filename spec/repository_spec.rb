@@ -137,7 +137,7 @@ module Treasury
       it "returns nil and warns if nothing found" do
         # User.should_receive(:find).with(*args_for_finding([99])).and_return([])
         repository[99].should == nil
-        @output.string.should =~ /Treasury::User Repository hitting DB from/
+        @output.string.should =~ /Treasury::User Repository hitting storage from/
         @output.string.should =~ /Warning: couldn't find 1 out of 1 Treasury::Users: missing keys 99/
       end
 
@@ -168,7 +168,7 @@ module Treasury
         repository.search([igor.id, frank.id]).should == [igor, frank]
       end
 
-      it "finds an object by id and puts it immediately" do
+      it "finds an object by id and stores it immediately" do
         repository.storage.store(frank)
         repository.search(frank.id).should == [frank]
         repository.size.should == 1
@@ -180,7 +180,7 @@ module Treasury
         repository.search("#{frank.id}").should == [frank]
       end
 
-      it "finds a bunch of objects and puts them immediately" do
+      it "finds a bunch of objects and stores them immediately" do
         repository.store([frank, igor])
         repository.search([frank.id, igor.id]).should == [frank, igor]
         repository.size.should == 2
@@ -192,7 +192,7 @@ module Treasury
         repository.store(frank)
         repository.storage.store(igor)
         repository.search([frank.id, igor.id]).should == [frank, igor]
-        @output.string.should =~ /Treasury::User Repository hitting DB from/
+        @output.string.should =~ /Treasury::User Repository hitting storage from/
       end
 
       it "returns them in the presented order" do
@@ -211,7 +211,7 @@ module Treasury
         igor.save!
         repository.storage.should_receive(:find_by_keys).with([frank.id, igor.id]).and_return([frank, igor])
         repository.search([frank.id, igor.id, frank.id, frank.id, igor.id]).should == [frank, igor, frank, frank, igor]
-        @output.string.should =~ /Treasury::User Repository hitting DB from/
+        @output.string.should =~ /Treasury::User Repository hitting storage from/
       end
 
       it "finds by criterion, and stashes the results for later" do
@@ -258,6 +258,14 @@ module Treasury
         @repository.extract do |user|
           user.contains(:name,  "a")
         end.should include_only(@frank.id, @elsa.id)
+      end
+    end
+
+    describe '#find_keys_in_criterion' do
+      it "asks for the criterion's value" do
+        criterion = Object.new
+        criterion.should_receive(:value).and_return([99])
+        @repository.send(:find_keys_in_criterion, criterion)
       end
     end
     

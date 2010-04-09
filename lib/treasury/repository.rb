@@ -16,6 +16,7 @@ module Treasury
       @stash.size
     end
 
+    # todo: clean up ambiguity between clearing the stash and clearing the storage
     def clear
       @stash.clear
     end
@@ -103,7 +104,9 @@ module Treasury
 
       unless needed.empty?
         needed.sort!.uniq! # the sort is just to make debugging easier
-        ActiveRecord::Base.logger.info("#{klass.name} Repository hitting DB from #{calling_function}")
+        if ActiveRecord::Base.logger # todo: use a more general way to get a logger
+          ActiveRecord::Base.logger.info("#{klass.name} Repository hitting storage from #{calling_function}")
+        end
 
         found_in_storage = storage.find(needed).compact
 

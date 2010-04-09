@@ -27,6 +27,13 @@ module Treasury
         Criterion::Equals.new({}).descriptor.should == "id equals"
       end
 
+      it "can use a criterion as its value" do
+        crazy = Criterion.new({})
+        crazy.stub!(:value).and_return([99])
+        @c = Criterion::Equals.new(:subject => "id", :value => crazy)
+        @c.sql.should == ["id IN (?)", [99]]
+      end
+
       describe '#match' do
         describe "a string" do
           before do

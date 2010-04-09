@@ -1,12 +1,12 @@
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+here = File.dirname(__FILE__)
+$LOAD_PATH.unshift(here)
+$LOAD_PATH.unshift(File.join(here, '..', 'lib'))
 
 require 'treasury'
 require 'spec'
 require 'spec/autorun'
 require 'spec/domain'
 require 'spec/matchers'
-
 
 def capturing_output
   output = StringIO.new
