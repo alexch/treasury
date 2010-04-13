@@ -79,6 +79,8 @@ module Treasury
       search(arg, &block).map{|o| @storage.class.key_for(o)}
     end
 
+    # This is the method that's called when you pass a block into search.
+    # It passes the Criterion::Factory as a block parameter. 
     def criterion_from
       yield Criterion::Factory
     end

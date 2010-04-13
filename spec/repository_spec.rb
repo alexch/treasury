@@ -222,14 +222,15 @@ module Treasury
         repository.size.should == 1
         repository.instance_variable_get(:@stash).get(frank.id).should == frank
       end
-      
+
+      # see dsl_spec for more
       it "accepts a block which uses the factory DSL" do
         repository.storage.store(frank)
         repository.search do |q|
           q.equals('name', frank.name)
         end.should == [frank]        
       end
-      
+
       it 'fails if neither an argument nor a block is passed' do
         lambda do
           repository.search
