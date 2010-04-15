@@ -26,6 +26,23 @@ module Treasury
     end
     
   end
+
+  class TreasureStorage < StashStorage
+    def store_new(objects)
+      objects.each do |object|
+        object.save!
+      end
+      store_old(objects)
+    end
+  end
+  
+  Keymaster.register(Treasure, TreasureStorage)
+
+  ###
+
+  class Project < Treasure
+
+  end
   
   class User < Treasure
     def initialize(hash = {})
@@ -39,14 +56,5 @@ module Treasury
   class Country < Treasure
   end
 
-  class TreasureStorage < StashStorage
-    def store_new(objects)
-      objects.each do |object|
-        object.save!
-      end
-      store_old(objects)
-    end
-  end
-  
-  Keymaster.register(Treasure, TreasureStorage)
+
 end

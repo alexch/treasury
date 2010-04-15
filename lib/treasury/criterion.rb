@@ -4,7 +4,7 @@ module Treasury
     attr_reader :subject, :descriptor, :value, :property_name
 
     def initialize(options)
-      @subject = (options[:subject] || "id").to_s
+      @subject = (options[:subject] || "treasury_key").to_s
       @descriptor = options[:descriptor] || "#{@subject} #{default_descriptor}"
       @value = options[:value]
       @value = nil if @value.blank?
@@ -140,6 +140,10 @@ public
     end
 
     class RefersTo < Criterion
+      def Factory.refers_to(subject, value, referent_class)
+        RefersTo.new(:subject => subject, :value => value, :referent_class => referent_class)
+      end
+
       attr_reader :referent_class
 
       def initialize(options)
@@ -222,7 +226,7 @@ public
       end
     end
 
-    class ExtractKeys < Criterion
+    class Join < Criterion
       attr_reader :referent_class
 
       def initialize(options)
